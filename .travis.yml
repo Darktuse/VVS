@@ -1,5 +1,6 @@
 language: java
 sudo: false
 script: 
-	- cd Practica1
-	- mvn test
+    - cd Practica1
+    - mvn test
+
