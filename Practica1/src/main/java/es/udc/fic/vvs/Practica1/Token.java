@@ -1,7 +1,5 @@
 package es.udc.fic.vvs.Practica1;
 
-import java.util.List;
-import java.util.Random;
 
 public class Token {
 

@@ -40,8 +40,16 @@ public class Cancion implements Contenido {
 
 	
 	public List<Contenido> buscar(String subcadena) {
-		// TODO Auto-generated method stub
-		return null;
+
+		List<Contenido> contenidos = new ArrayList<Contenido>();
+		
+		if ((titulo.toLowerCase()).indexOf((subcadena.toLowerCase())) > (-1)){
+			contenidos.add(this);
+		} else {
+			System.out.println("No existe ningún contenido correspondiente a esa búsqueda.");
+		}
+		
+		return contenidos;
 	}
 
 	

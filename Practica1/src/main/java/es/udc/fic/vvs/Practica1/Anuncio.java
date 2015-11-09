@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Anuncio implements Contenido {
 	
+	private static String titulo = "PUBLICIDAD";
+	private static int duracion = 5;
 
 	// Constructores.
 	
@@ -17,13 +19,13 @@ public class Anuncio implements Contenido {
 
 	public String obtenerTitulo() {
 		// Los anuncios siempre tienen como título "PUBLICIDAD".
-		return "PUBLICIDAD";
+		return this.titulo;
 	}
 
 	
 	public int obtenerDuracion() {
 		// Los anuncios siempre duran 5 segundos.
-		return 5;
+		return this.duracion;
 	}
 
 	public List<Contenido> obtenerListaReproduccion() {
@@ -35,8 +37,16 @@ public class Anuncio implements Contenido {
 
 	
 	public List<Contenido> buscar(String subcadena) {
-		// TODO Auto-generated method stub
-		return null;
+
+		List<Contenido> contenidos = new ArrayList<Contenido>();
+		
+		if ((titulo.toLowerCase()).indexOf((subcadena.toLowerCase())) > (-1)){
+			contenidos.add(this);
+		} else {
+			System.out.println("No existe ningún contenido correspondiente a esa búsqueda.");
+		}
+		
+		return contenidos;
 	}
 	
 	
