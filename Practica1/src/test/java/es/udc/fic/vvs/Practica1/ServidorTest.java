@@ -61,6 +61,22 @@ public class ServidorTest {
 		assert(contenidos.isEmpty()==true);
 	}
 	
+	@Test
+	public void darBajaTokenDosVeces(){
+		assert(true);
+	}
+	
+	@Test(expected = InvalidTokenException.class)
+	public void agregarContenidoExceptionTest() throws InvalidTokenException{
+
+		Servidor servidor = crearServidor();
+		
+		String token = servidor.alta();
+		
+		servidor.agregar(new Anuncio(), token);
+
+	};
+	
 	private Servidor crearServidor(){
 				
 		Servidor servidor = new ServidorImpl("Servidor");
