@@ -216,6 +216,14 @@ public class ServidorImpl implements Servidor {
 				return tokensAdmitidos.get(i);
 		return null;
 	}
+	
+	public Token getToken(String token){
+		return buscaToken(token);
+	}
+	public void setToken(Token token){
+		if(buscaToken(token.getToken())==null)
+			tokensAdmitidos.add(token);
+	}
 
 
 
