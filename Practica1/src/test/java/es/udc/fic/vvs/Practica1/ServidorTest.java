@@ -76,6 +76,66 @@ public class ServidorTest {
 		servidor.agregar(new Anuncio(), token);
 
 	};
+
+	@Test
+	public void eliminarContenidoTest() throws InvalidTokenException{
+
+		Servidor servidor = crearServidor();
+		
+		String token = servidor.alta();
+		
+		List<Contenido> contenidos = servidor.buscar("4", token);
+		
+		assertEquals(contenidos.size(), 1);
+
+		servidor.eliminar(contenidos.get(0), tokenSpecial);
+
+		contenidos = servidor.buscar("4", token);
+		
+		assertEquals(contenidos.size(), 0);
+
+	};	
+	
+	@Test
+	public void buscarTokenVacioTest(){
+
+		Servidor servidor = crearServidor();
+		
+		String token = "";
+		
+		List<Contenido> contenidos = servidor.buscar("Cancion2", token);
+			
+		//Encuentra 4 Cancion2 + 2 anuncios
+		assertEquals(contenidos.size(), 6);
+		
+	};
+
+	@Test
+	public void buscarTokenNoAdmitidoTest(){
+
+		Servidor servidor = crearServidor();
+		
+		String token = "No admitido";
+		
+		List<Contenido> contenidos = servidor.buscar("Cancion2", token);
+			
+		assert(contenidos.isEmpty());
+		
+	};
+	
+	@Test(expected = InvalidTokenException.class)
+	public void eliminarContenidoExceptionTest() throws InvalidTokenException{
+
+		Servidor servidor = crearServidor();
+		
+		String token = servidor.alta();
+		
+		List<Contenido> contenidos = servidor.buscar("4", token);
+		
+		assertEquals(contenidos.size(), 1);
+
+		servidor.eliminar(new Anuncio(), token);
+	};
 	
 	private Servidor crearServidor(){
 				
@@ -103,6 +163,9 @@ public class ServidorTest {
 		
 		try {
 			servidor.agregar(cancion1, tokenSpecial);
+			servidor.agregar(cancion2, tokenSpecial);
+			servidor.agregar(cancion2, tokenSpecial);
+			servidor.agregar(cancion2, tokenSpecial);
 			servidor.agregar(cancion2, tokenSpecial);
 			servidor.agregar(cancion3, tokenSpecial);
 			servidor.agregar(cancion4, tokenSpecial);
