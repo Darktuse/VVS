@@ -10,7 +10,7 @@ public class ServidorImpl implements Servidor {
 	
 	private String nombre;
 	private List<Contenido> contenidos = new ArrayList<Contenido>();
-	private List<String> tokensAdmitidos = new ArrayList<String>();
+	private List<Token> tokensAdmitidos = new ArrayList<Token>();
 	
 	// Constructores
 	
@@ -34,19 +34,21 @@ public class ServidorImpl implements Servidor {
 	public String alta() {
 		// Ten que devolver o token. Serve para dar
 		// de alta un usuario no servidor.
-		Token token = new Token(10);
+		String newToken = null;
 		boolean exist = true;
 		
 		while (exist) {
-			token.setToken(token.generarToken());
+			newToken = generarToken();
 			if (!tokensAdmitidos.isEmpty()){
-				exist = token.findToken(tokensAdmitidos, token.getToken());
+				exist = findToken(tokensAdmitidos, newToken);
 			} else {
 				exist = false;
 			}
 		}
 		
-		tokensAdmitidos.add(token.getToken());
+		Token token = new Token(newToken, 10);
+		tokensAdmitidos.add(token);
+		
 		return token.getToken();
 	}
 
@@ -54,16 +56,15 @@ public class ServidorImpl implements Servidor {
 		// Dase de baixa o token, polo que non se recoñecerá
 		// como válido nunca máis.
 		// IMPLICITAMENTE cando buscas e superas os 10 contidos.
-		Token tok = new Token();
 		
-		boolean exist = tok.findToken(tokensAdmitidos, token);
+		boolean exist = findToken(tokensAdmitidos, token);
 		
 		if (!exist){
 			// LANZAR EXCEPCION?
 		} else {
 			
 			for (int i = 0; i < tokensAdmitidos.size(); i++){
-				if (tokensAdmitidos.get(i) == token) {
+				if (tokensAdmitidos.get(i).getToken() == token) {
 					tokensAdmitidos.remove(i);
 					break;
 				}
@@ -88,6 +89,37 @@ public class ServidorImpl implements Servidor {
 		return null;
 	}
 	
+	
+	// FUNCIONES AUXILIARES
+	
+	private String generarToken(){
+			
+		char[] chars = "abcdefghijklmnopqrstuvwxyz123456789".toCharArray();
+		StringBuilder sb = new StringBuilder();
+		Random random = new Random();
+		for (int i = 0; i < 6; i++) {
+		    char c = chars[random.nextInt(chars.length)];
+		    sb.append(c);
+		}
+		
+		String output = sb.toString();
+		return output;
+		
+	}
+			
+	private boolean findToken(List<Token> tokensAdmitidos, String token){
+		boolean exist = false;
+			
+		for (int i=0; i<(tokensAdmitidos.size()); i++){
+			exist = tokensAdmitidos.get(i).getToken().equalsIgnoreCase(token);
+			if (exist == true){
+				break;
+			}
+		}
+		
+		
+		return exist;
+	}
 
 
 

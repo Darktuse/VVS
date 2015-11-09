@@ -49,35 +49,5 @@ public class Token {
 	}
 	
 	
-	// FUNCIONES AUXILIARES
-	
-	public String generarToken(){
-			
-		char[] chars = "abcdefghijklmnopqrstuvwxyz123456789".toCharArray();
-		StringBuilder sb = new StringBuilder();
-		Random random = new Random();
-		for (int i = 0; i < 6; i++) {
-		    char c = chars[random.nextInt(chars.length)];
-		    sb.append(c);
-		}
-		
-		String output = sb.toString();
-		return output;
-		
-	}
-		
-	public boolean findToken(List<String> tokensAdmitidos, String token){
-		boolean exist = false;
-			
-		for (int i=0; i<(tokensAdmitidos.size()); i++){
-			exist = tokensAdmitidos.get(i).equalsIgnoreCase(token);
-			if (exist == true){
-				break;
-			}
-		}
-		
-		
-		return exist;
-	}
 	
 }
