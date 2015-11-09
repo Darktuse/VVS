@@ -17,7 +17,7 @@ public class ServidorTest {
 
 	
 	@Test
-    public void obtenerContenidoTest()
+    public void obtenerContenidoTest() throws InvalidTokenException
     {
 
 		Servidor servidor = crearServidor();
@@ -32,7 +32,7 @@ public class ServidorTest {
     
 	
 	@Test
-	public void obtenerContenidoSinTokenTest(){
+	public void obtenerContenidoSinTokenTest() throws InvalidTokenException{
 		
 		Servidor servidor = crearServidor();
 		
@@ -44,7 +44,7 @@ public class ServidorTest {
 	}
 	
 	@Test
-	public void darBajaTokenTest(){
+	public void darBajaTokenTest() throws InvalidTokenException{
 		
 		Servidor servidor = crearServidor();
 		
@@ -61,9 +61,17 @@ public class ServidorTest {
 		assert(contenidos.isEmpty()==true);
 	}
 	
-	@Test
-	public void darBajaTokenDosVeces(){
-		assert(true);
+	@Test(expected = InvalidTokenException.class)
+	public void darBajaTokenDosVeces() throws InvalidTokenException{
+
+		Servidor servidor = crearServidor();
+		
+		String token = servidor.alta();
+		
+		servidor.baja(token);
+		
+		servidor.baja(token);
+		
 	}
 	
 	@Test(expected = InvalidTokenException.class)
@@ -97,7 +105,7 @@ public class ServidorTest {
 	};	
 	
 	@Test
-	public void buscarTokenVacioTest(){
+	public void buscarTokenVacioTest() throws InvalidTokenException{
 
 		Servidor servidor = crearServidor();
 		
@@ -111,7 +119,7 @@ public class ServidorTest {
 	};
 
 	@Test
-	public void buscarTokenNoAdmitidoTest(){
+	public void buscarTokenNoAdmitidoTest() throws InvalidTokenException{
 
 		Servidor servidor = crearServidor();
 		

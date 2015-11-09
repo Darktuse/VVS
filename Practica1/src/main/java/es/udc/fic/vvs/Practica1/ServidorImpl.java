@@ -121,8 +121,8 @@ public class ServidorImpl implements Servidor {
 				// se non atopou nada, chamase ao outro servidor para mirar o seu contido
 				c = servidorRespaldo.buscar(subcadena, token);
 			}
-			if (servidorRespaldo!=null)
-				c = insertaAnuncios(c);
+			//if (servidorRespaldo!=null)
+			c = insertaAnuncios(c);
 			return c;
 		}
 		if (findToken(tokensAdmitidos, token)) {
