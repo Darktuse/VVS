@@ -2,7 +2,6 @@ package es.udc.fic.vvs.Practica1;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 public class ServidorImpl implements Servidor {
@@ -110,6 +109,16 @@ public class ServidorImpl implements Servidor {
 	
 	public List<Contenido> buscar(String subcadena, String token) {
 		List<Contenido> c = new ArrayList<Contenido>();
+		if (token.isEmpty()){
+			c = buscarNome(subcadena);
+			if (c.isEmpty()) {
+				// se non atopou nada, chamase ao outro servidor para mirar o seu contido
+				ServidorImpl2 serv = new ServidorImpl2();
+				c = serv.buscaInterna(subcadena);
+			}
+			c = insertaAnuncios(c);
+			return c;
+		}
 		if (findToken(tokensAdmitidos, token)) {
 			c = buscarNome(subcadena);
 			Token t = buscaToken(token);
@@ -117,9 +126,9 @@ public class ServidorImpl implements Servidor {
 				// se non atopou nada, chamase ao outro servidor para mirar o seu contido
 				ServidorImpl2 serv = new ServidorImpl2();
 				c = serv.buscaInterna(subcadena);
-				restarToken(t,c);
+				c = restarToken(t,c);
 			} else 
-				restarToken(t,c);
+				c = restarToken(t,c);
 		}
 		return c;
 	}
@@ -135,7 +144,23 @@ public class ServidorImpl implements Servidor {
 		return buscarNome(subcadena);
 	}
 	
-	private void restarToken(Token t, List<Contenido> c ){
+	private List<Contenido> insertaAnuncios(List<Contenido> l){
+		int i = 0;
+		Anuncio a = new Anuncio();
+		List<Contenido> cont = new ArrayList<Contenido>();
+		for(Contenido c:l){
+			if (i%3==0) {
+				cont.add(a);
+				cont.add(c);
+			} else {
+				cont.add(c);
+			}
+			i++;
+		}
+		return cont;
+	}
+	
+	private List<Contenido> restarToken(Token t, List<Contenido> c ){
 		/*Funcion na cal se resta o numero ao token
 		 * 
 		 * O token pode darse de baixa (operación baja()), co cal o servidor xa non o recoñecerá como válido nunca mais, 
@@ -151,6 +176,7 @@ public class ServidorImpl implements Servidor {
 			// como o toquen quedaria a cero xa se borra e listo
 			baja(t.getToken());
 		}
+		return c;
 	}
 	
 	private List<Contenido> buscarNome(String nome){
@@ -162,14 +188,6 @@ public class ServidorImpl implements Servidor {
 	}
 	
 	private String generarToken(){
-			
-//		char[] chars = "abcdefghijklmnopqrstuvwxyz123456789".toCharArray();
-//		StringBuilder sb = new StringBuilder();
-//		Random random = new Random();
-//		for (int i = 0; i < 6; i++) {
-//		    char c = chars[random.nextInt(chars.length)];
-//		    sb.append(c);
-//		}
 		String output = new String();
 		while(true){
 		output = UUID.randomUUID().toString().substring(0, 10);
@@ -179,17 +197,6 @@ public class ServidorImpl implements Servidor {
 	}
 			
 	private boolean findToken(List<Token> tokensAdmitidos, String token){
-//		boolean exist = false;
-//			
-//		for (int i=0; i<(tokensAdmitidos.size()); i++){
-//			exist = tokensAdmitidos.get(i).getToken().equalsIgnoreCase(token);
-//			if (exist == true){
-//				break;
-//			}
-//		}
-//		
-//		
-//		return exist;
 		for (int i=0; i<(tokensAdmitidos.size()); i++)
 			if (tokensAdmitidos.get(i).getToken().equalsIgnoreCase(token))
 				return true;

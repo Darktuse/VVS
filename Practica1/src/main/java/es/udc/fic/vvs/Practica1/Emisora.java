@@ -53,14 +53,14 @@ public class Emisora implements Contenido {
 		return listaContenidos;
 	}
 
-	public void agregar(Contenido contenido, Contenido predecesor) {
+	public void agregar(Contenido contenido, Contenido predecesor) throws ContenidoInexistenteException {
 		// primero busca el contenido predecesor, mira la posicion en la que está, y hace un add
 		// del nuevo contenido en la siguiente posicion
 		if (contenidos.isEmpty() && predecesor==null){
 			contenidos.add(contenido);
 			duracion += contenido.obtenerDuracion();
 		} else {
-			if (predecesor == null) return;
+			if (predecesor == null) throw new ContenidoInexistenteException();
 			int posicion = buscarContenido(predecesor);
 			contenidos.add(posicion+1, contenido);
 			duracion += contenido.obtenerDuracion();
@@ -71,7 +71,7 @@ public class Emisora implements Contenido {
 	}
 
 	
-	public void eliminar(Contenido contenido) {
+	public void eliminar(Contenido contenido) throws ContenidoInexistenteException {
 		// TODO Auto-generated method stub
 		int posicion = buscarContenido(contenido);
 		duracion -= contenido.obtenerDuracion();
@@ -82,7 +82,7 @@ public class Emisora implements Contenido {
 	
 	// FUNCIONES AUXILIARES
 	
-	private int buscarContenido(Contenido contenido){
+	private int buscarContenido(Contenido contenido) throws ContenidoInexistenteException{
 		Integer posicion = null;
 		
 		for (int i = 0; i < contenidos.size(); i++){
@@ -92,8 +92,7 @@ public class Emisora implements Contenido {
 		}
 		
 		if (posicion == null){
-//			throw EXCEPTION;
-			System.out.println ("EH, QUE NO EXISTE ESE CONTENIDO");
+			throw new ContenidoInexistenteException();
 		}
 		
 		return posicion;

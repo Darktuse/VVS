@@ -2,7 +2,6 @@ package es.udc.fic.vvs.Practica1;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 public class ServidorImpl2 implements Servidor {
@@ -105,16 +104,26 @@ public class ServidorImpl2 implements Servidor {
 
 	public List<Contenido> buscar(String subcadena, String token) {
 		List<Contenido> c = new ArrayList<Contenido>();
+		if (token.isEmpty()){
+			c = buscarNome(subcadena);
+			if (c.isEmpty()) {
+				// se non atopou nada, chamase ao outro servidor para mirar o seu contido
+				ServidorImpl2 serv = new ServidorImpl2();
+				c = serv.buscaInterna(subcadena);
+			}
+			c = insertaAnuncios(c);
+			return c;
+		}
 		if (findToken(tokensAdmitidos, token)) {
 			c = buscarNome(subcadena);
 			Token t = buscaToken(token);
 			if (c.isEmpty()) {
 				// se non atopou nada, chamase ao outro servidor para mirar o seu contido
-				ServidorImpl serv = new ServidorImpl();
+				ServidorImpl2 serv = new ServidorImpl2();
 				c = serv.buscaInterna(subcadena);
-				restarToken(t,c);
+				c = restarToken(t,c);
 			} else 
-				restarToken(t,c);
+				c = restarToken(t,c);
 		}
 		return c;
 	}
@@ -127,7 +136,23 @@ public class ServidorImpl2 implements Servidor {
 		return buscarNome(subcadena);
 	}
 
-	private void restarToken(Token t, List<Contenido> c ){
+	private List<Contenido> insertaAnuncios(List<Contenido> l){
+		int i = 0;
+		Anuncio a = new Anuncio();
+		List<Contenido> cont = new ArrayList<Contenido>();
+		for(Contenido c:l){
+			if (i%3==0) {
+				cont.add(a);
+				cont.add(c);
+			} else {
+				cont.add(c);
+			}
+			i++;
+		}
+		return cont;
+	}
+	
+	private List<Contenido> restarToken(Token t, List<Contenido> c ){
 		/*Funcion na cal se resta o numero ao token
 		 * 
 		 * O token pode darse de baixa (operación baja()), co cal o servidor xa non o recoñecerá como válido nunca mais, 
@@ -143,7 +168,9 @@ public class ServidorImpl2 implements Servidor {
 			// como o toquen quedaria a cero xa se borra e listo
 			baja(t.getToken());
 		}
+		return c;
 	}
+	
 	private List<Contenido> buscarNome(String nome) {
 		List<Contenido> cont = new ArrayList<Contenido>();
 		for (Contenido c : contenidos) {

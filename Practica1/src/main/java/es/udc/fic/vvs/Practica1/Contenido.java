@@ -12,9 +12,9 @@ public interface Contenido {
 	
 	public List<Contenido> buscar (String subcadena);
 	
-	public void agregar (Contenido contenido, Contenido predecesor);
+	public void agregar (Contenido contenido, Contenido predecesor) throws ContenidoInexistenteException;
 
-	public void eliminar (Contenido contenido);
+	public void eliminar (Contenido contenido) throws ContenidoInexistenteException;
 	
 	
 }
