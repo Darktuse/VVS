@@ -145,17 +145,21 @@ public class ServidorImpl implements Servidor {
 	}
 			
 	private boolean findToken(List<Token> tokensAdmitidos, String token){
-		boolean exist = false;
-			
-		for (int i=0; i<(tokensAdmitidos.size()); i++){
-			exist = tokensAdmitidos.get(i).getToken().equalsIgnoreCase(token);
-			if (exist == true){
-				break;
-			}
-		}
-		
-		
-		return exist;
+//		boolean exist = false;
+//			
+//		for (int i=0; i<(tokensAdmitidos.size()); i++){
+//			exist = tokensAdmitidos.get(i).getToken().equalsIgnoreCase(token);
+//			if (exist == true){
+//				break;
+//			}
+//		}
+//		
+//		
+//		return exist;
+		for (int i=0; i<(tokensAdmitidos.size()); i++)
+			if (tokensAdmitidos.get(i).getToken().equalsIgnoreCase(token))
+				return true;
+		return false;
 	}
 
 
