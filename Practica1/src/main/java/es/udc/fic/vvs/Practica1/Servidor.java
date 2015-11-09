@@ -9,13 +9,13 @@ public interface Servidor  {
 		
 		public String alta();
 		
-		public void baja (String token);
+		public void baja (String token) throws InvalidTokenException;
 		
 		public void agregar (Contenido contenido, String token) throws InvalidTokenException;
 		
 		public void eliminar (Contenido contenido, String token) throws InvalidTokenException;
 		
-		public List<Contenido> buscar (String subcadena, String token);
+		public List<Contenido> buscar (String subcadena, String token) throws InvalidTokenException;
 		
 		
 }

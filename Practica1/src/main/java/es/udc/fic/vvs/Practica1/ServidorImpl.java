@@ -12,7 +12,7 @@ public class ServidorImpl implements Servidor {
 	private List<Contenido> contenidos = new ArrayList<Contenido>();
 	private List<Token> tokensAdmitidos = new ArrayList<Token>();
 	private static final String tokenSpecial = "tokenspecial";
-	private Servidor servidorRespaldo = null;
+	private ServidorImpl servidorRespaldo = null;
 	
 	// Constructores
 	
@@ -23,7 +23,7 @@ public class ServidorImpl implements Servidor {
 	public ServidorImpl(String nombre, Servidor servidorRespaldo) {
 		super();
 		this.nombre=nombre;
-		this.servidorRespaldo = servidorRespaldo;
+		this.servidorRespaldo = (ServidorImpl) servidorRespaldo;
 	}
 	
 	
@@ -56,11 +56,12 @@ public class ServidorImpl implements Servidor {
 		
 		Token token = new Token(newToken, 10);
 		tokensAdmitidos.add(token);
+		if (servidorRespaldo!=null) servidorRespaldo.setToken(token);
 		
 		return token.getToken();
 	}
 
-	public void baja(String token) {
+	public void baja(String token) throws InvalidTokenException {
 		// Dase de baixa o token, polo que non se recoñecerá
 		// como válido nunca máis.
 		// IMPLICITAMENTE cando buscas e superas os 10 contidos.
@@ -68,9 +69,9 @@ public class ServidorImpl implements Servidor {
 		boolean exist = findToken(tokensAdmitidos, token);
 		
 		if (!exist){
-			// LANZAR EXCEPCION?
+			throw new InvalidTokenException();
 		} else {
-			
+			if (servidorRespaldo!=null) servidorRespaldo.baja(token);
 			for (int i = 0; i < tokensAdmitidos.size(); i++){
 				if (tokensAdmitidos.get(i).getToken() == token) {
 					tokensAdmitidos.remove(i);
@@ -83,8 +84,7 @@ public class ServidorImpl implements Servidor {
 	}
 
 	public void agregar(Contenido contenido, String token) throws InvalidTokenException {
-		// TODO FALTA EXCEPCION DE TOKEN NO VALIDO
-		
+
 		if (tokenSpecial.equals(token)){
 			this.contenidos.add(contenido);
 		} else {
@@ -95,8 +95,7 @@ public class ServidorImpl implements Servidor {
 
 	
 	public void eliminar(Contenido contenido, String token) throws InvalidTokenException {
-		// TODO Auto-generated method stub
-		
+
 		if (tokenSpecial.equals(token)){
 			
 			for (int i = 0; i < contenidos.size(); i++){
@@ -114,7 +113,7 @@ public class ServidorImpl implements Servidor {
 	}
 
 	
-	public List<Contenido> buscar(String subcadena, String token) {
+	public List<Contenido> buscar(String subcadena, String token) throws InvalidTokenException {
 		List<Contenido> c = new ArrayList<Contenido>();
 		if (token.isEmpty()){
 			c = buscarNome(subcadena);
@@ -122,7 +121,8 @@ public class ServidorImpl implements Servidor {
 				// se non atopou nada, chamase ao outro servidor para mirar o seu contido
 				c = servidorRespaldo.buscar(subcadena, token);
 			}
-			c = insertaAnuncios(c);
+			if (servidorRespaldo!=null)
+				c = insertaAnuncios(c);
 			return c;
 		}
 		if (findToken(tokensAdmitidos, token)) {
@@ -134,8 +134,11 @@ public class ServidorImpl implements Servidor {
 					c = servidorRespaldo.buscar(subcadena, token);
 					c = restarToken(t,c);
 				}
-			} else 
-				c = restarToken(t,c);
+			} else {
+				if (servidorRespaldo!=null)
+						c = restarToken(t,c);
+			}
+				
 		}
 		return c;
 	}
@@ -167,7 +170,7 @@ public class ServidorImpl implements Servidor {
 		return cont;
 	}
 	
-	private List<Contenido> restarToken(Token t, List<Contenido> c ){
+	private List<Contenido> restarToken(Token t, List<Contenido> c ) throws InvalidTokenException{
 		/*Funcion na cal se resta o numero ao token
 		 * 
 		 * O token pode darse de baixa (operación baja()), co cal o servidor xa non o recoñecerá como válido nunca mais, 
@@ -175,12 +178,15 @@ public class ServidorImpl implements Servidor {
 		 * A especificación non indica con mais detalle como se "contan" eses 10 contidos... cousas que pasan ;-)
 		 * */
 		// Se é menor restase o tamaño dos contidos
-		if (c.size() < t.getNumero())
-			t.restarVarios(c.size());
+		if (c.size() < t.getNumero()){
+			if (servidorRespaldo!=null)
+				t.restarVarios(c.size());
+		}
 		else {
 			// se e maior ou igual reduciriase a lista ao tamaño do token que queda
-			c = c.subList(0, t.getNumero() - 1);
+			c = c.subList(0, t.getNumero());
 			// como o toquen quedaria a cero xa se borra e listo
+			String token = t.getToken();
 			baja(t.getToken());
 		}
 		return c;
