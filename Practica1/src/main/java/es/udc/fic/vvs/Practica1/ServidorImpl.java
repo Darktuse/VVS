@@ -107,7 +107,9 @@ public class ServidorImpl implements Servidor {
 
 	
 	public List<Contenido> buscar(String subcadena, String token) {
-		// TODO Auto-generated method stub
+		if(findToken(tokensAdmitidos,token)){
+			return buscarNome(subcadena);
+		}
 		return null;
 	}
 	
@@ -115,6 +117,14 @@ public class ServidorImpl implements Servidor {
 	
 	
 	// FUNCIONES AUXILIARES
+	
+	private List<Contenido> buscarNome(String nome){
+		List<Contenido> cont = new ArrayList<Contenido>();
+		for(Contenido c:contenidos){
+			cont.addAll(c.buscar(nome));
+		}
+		return cont;
+	}
 	
 	private String generarToken(){
 			
