@@ -56,10 +56,11 @@ public class Emisora implements Contenido {
 	public void agregar(Contenido contenido, Contenido predecesor) {
 		// primero busca el contenido predecesor, mira la posicion en la que está, y hace un add
 		// del nuevo contenido en la siguiente posicion
-		if (contenidos.isEmpty()){
+		if (contenidos.isEmpty() && predecesor==null){
 			contenidos.add(contenido);
 			duracion += contenido.obtenerDuracion();
 		} else {
+			if (predecesor == null) return;
 			int posicion = buscarContenido(predecesor);
 			contenidos.add(posicion+1, contenido);
 			duracion += contenido.obtenerDuracion();

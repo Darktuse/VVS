@@ -12,6 +12,7 @@ public class ServidorImpl implements Servidor {
 	private String nombre;
 	private List<Contenido> contenidos = new ArrayList<Contenido>();
 	private List<Token> tokensAdmitidos = new ArrayList<Token>();
+	private static final String tokenSpecial = "tokenspecial";
 	
 	// Constructores
 	
