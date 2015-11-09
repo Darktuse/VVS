@@ -17,7 +17,8 @@ public class Cancion implements Contenido {
 	}
 	
 	public Cancion(String titulo, int duracion){
-		
+		this.titulo = titulo;
+		this.duracion = duracion;
 	}
 	
 	
@@ -43,7 +44,7 @@ public class Cancion implements Contenido {
 
 		List<Contenido> contenidos = new ArrayList<Contenido>();
 		
-		if ((titulo.toLowerCase()).indexOf((subcadena.toLowerCase())) > (-1)){
+		if ((titulo.toLowerCase()).contains(subcadena.toLowerCase())){
 			contenidos.add(this);
 		} else {
 			System.out.println("No existe ningún contenido correspondiente a esa búsqueda.");

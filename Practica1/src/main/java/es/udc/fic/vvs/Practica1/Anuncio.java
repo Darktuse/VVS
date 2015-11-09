@@ -19,13 +19,13 @@ public class Anuncio implements Contenido {
 
 	public String obtenerTitulo() {
 		// Los anuncios siempre tienen como título "PUBLICIDAD".
-		return this.titulo;
+		return titulo;
 	}
 
 	
 	public int obtenerDuracion() {
 		// Los anuncios siempre duran 5 segundos.
-		return this.duracion;
+		return duracion;
 	}
 
 	public List<Contenido> obtenerListaReproduccion() {
@@ -40,7 +40,7 @@ public class Anuncio implements Contenido {
 
 		List<Contenido> contenidos = new ArrayList<Contenido>();
 		
-		if ((titulo.toLowerCase()).indexOf((subcadena.toLowerCase())) > (-1)){
+		if ((titulo.toLowerCase()).contains(subcadena.toLowerCase())){
 			contenidos.add(this);
 		} else {
 			System.out.println("No existe ningún contenido correspondiente a esa búsqueda.");
