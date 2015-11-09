@@ -3,6 +3,7 @@ package es.udc.fic.vvs.Practica1;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 public class ServidorImpl implements Servidor {
 
@@ -128,15 +129,15 @@ public class ServidorImpl implements Servidor {
 	
 	private String generarToken(){
 			
-		char[] chars = "abcdefghijklmnopqrstuvwxyz123456789".toCharArray();
-		StringBuilder sb = new StringBuilder();
-		Random random = new Random();
-		for (int i = 0; i < 6; i++) {
-		    char c = chars[random.nextInt(chars.length)];
-		    sb.append(c);
-		}
+//		char[] chars = "abcdefghijklmnopqrstuvwxyz123456789".toCharArray();
+//		StringBuilder sb = new StringBuilder();
+//		Random random = new Random();
+//		for (int i = 0; i < 6; i++) {
+//		    char c = chars[random.nextInt(chars.length)];
+//		    sb.append(c);
+//		}
 		
-		String output = sb.toString();
+		String output = UUID.randomUUID().toString().substring(0, 10);
 		return output;
 		
 	}
