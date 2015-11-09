@@ -72,7 +72,7 @@ public class Emisora implements Contenido {
 
 	
 	public void eliminar(Contenido contenido) throws ContenidoInexistenteException {
-		// TODO Auto-generated method stub
+
 		int posicion = buscarContenido(contenido);
 		duracion -= contenido.obtenerDuracion();
 		contenidos.remove(posicion);

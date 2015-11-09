@@ -183,4 +183,101 @@ public class ContenidoTest {
 		
 	}
     
+	
+	@Test(expected = ContenidoInexistenteException.class)
+	public void testAgregarContenidoEmisoraPredecesorInvalido() throws ContenidoInexistenteException{
+		
+		Contenido emisora = new Emisora("RockFm");
+		
+		Contenido cancion1= new Cancion("Cancion1", 93);
+		Contenido cancion2= new Cancion("Cancion2", 124);
+		Contenido anuncio = new Anuncio();
+		
+		emisora.agregar(cancion1, null);
+		emisora.agregar(anuncio, cancion2);
+		
+	}
+	
+	@Test(expected = ContenidoInexistenteException.class)
+	public void testEliminarContenidoNoExistenteEmisora() throws ContenidoInexistenteException{
+		
+		Contenido emisora = new Emisora("RockFm");
+		
+		Contenido cancion1 = new Cancion("Cancion1", 123);
+		Contenido cancion2 = new Cancion("Cancion2", 87);
+		Contenido anuncio = new Anuncio();
+		
+		emisora.agregar(cancion1, null);
+		emisora.agregar(cancion2, cancion1);
+		
+		emisora.eliminar(anuncio);
+	}
+	
+	
+	@Test
+	public void testBuscarEnEmisoraCorrecto() throws ContenidoInexistenteException{
+		
+		Contenido emisora = new Emisora("RockFm");
+		List<Contenido> lista = new ArrayList<Contenido>();
+		
+		Contenido cancion1 = new Cancion("Cancion1", 132);
+		Contenido cancion2 = new Cancion("Cancion2", 98);
+		Contenido cancion3 = new Cancion("Little Song", 52);
+		Contenido anuncio = new Anuncio();
+		
+	
+		emisora.agregar(cancion1, null);
+		emisora.agregar(anuncio, cancion1);
+		emisora.agregar(cancion2, cancion1);
+		emisora.agregar(cancion3, anuncio);
+		
+		lista.add(cancion1);
+		lista.add(cancion2);
+		lista.add(anuncio);
+		lista.add(cancion3);
+		
+		
+		
+		assertEquals(lista, emisora.obtenerListaReproduccion());
+		
+		assertEquals(1, emisora.buscar("ttle").size());
+		assertEquals(cancion3, emisora.buscar("ttle").get(0));
+		
+		assertEquals(2, emisora.buscar("cion").size());
+		assertEquals(cancion1, emisora.buscar("cion").get(0));
+		assertEquals(cancion2, emisora.buscar("cion").get(1));
+	
+		assertEquals(1, emisora.buscar("ici").size());
+		assertEquals(anuncio, emisora.buscar("ici").get(0));
+	}
+	
+	
+	@Test
+	public void testBuscarEnEmisoraIncorrecto() throws ContenidoInexistenteException{
+		
+		Contenido emisora = new Emisora("RockFm");
+		List<Contenido> lista = new ArrayList<Contenido>();
+		List<Contenido> listaVacia= new ArrayList<Contenido>();
+		
+		Contenido anuncio = new Anuncio();
+		Contenido cancion1 = new Cancion("Cancion1", 93);
+		
+		emisora.agregar(anuncio, null);
+		emisora.agregar(cancion1, anuncio);
+		emisora.agregar(anuncio, cancion1);
+		
+		lista.add(anuncio);
+		lista.add(cancion1);
+		lista.add(anuncio);
+		
+		
+		assertEquals(3, emisora.obtenerListaReproduccion().size());
+		assertEquals(lista, emisora.obtenerListaReproduccion());
+		
+		assertEquals(0, emisora.buscar("ama").size());
+		assertEquals(listaVacia, emisora.buscar("ama"));
+		
+		
+		
+	}
 }
