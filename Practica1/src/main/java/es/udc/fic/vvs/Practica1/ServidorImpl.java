@@ -82,22 +82,22 @@ public class ServidorImpl implements Servidor {
 		
 	}
 
-	public void agregar(Contenido contenido, String token) {
+	public void agregar(Contenido contenido, String token) throws InvalidTokenException {
 		// TODO FALTA EXCEPCION DE TOKEN NO VALIDO
 		
-		if (findToken(tokensAdmitidos, token)){
+		if (tokenSpecial.equals(token)){
 			this.contenidos.add(contenido);
 		} else {
-			// TOKEN NO VALIDO!
+			throw new InvalidTokenException();
 		}
 		
 	}
 
 	
-	public void eliminar(Contenido contenido, String token) {
+	public void eliminar(Contenido contenido, String token) throws InvalidTokenException {
 		// TODO Auto-generated method stub
 		
-		if (findToken(tokensAdmitidos, token)){
+		if (tokenSpecial.equals(token)){
 			
 			for (int i = 0; i < contenidos.size(); i++){
 				if (contenidos.get(i) == contenido) {
@@ -108,7 +108,7 @@ public class ServidorImpl implements Servidor {
 			}
 			
 		} else {
-			// TOKEN NO VALIDO!
+			throw new InvalidTokenException();
 		}
 		
 	}
