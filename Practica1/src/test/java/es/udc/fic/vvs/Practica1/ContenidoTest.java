@@ -98,5 +98,89 @@ public class ContenidoTest {
 		
 	}
 	
+	
+	/* -------------- TESTS DE EMISORA ----------------- */
+
+	@Test
+	public void testCrearEmisoraYObtenerDatos(){
+		
+		Contenido emisora = new Emisora("RockFm");
+		List<Contenido> lista = new ArrayList<Contenido>();
+		
+		assertEquals("RockFm", emisora.obtenerTitulo());
+		assertEquals(0, emisora.obtenerDuracion());
+		assertEquals(lista, emisora.obtenerListaReproduccion());
+	}
+	
+	
+	@Test
+	public void testAgregarContenidoEmisora() throws ContenidoInexistenteException{
+		
+		Contenido emisora = new Emisora("RockFm");
+		List<Contenido> lista = new ArrayList<Contenido>();
+		
+		assertEquals(0, emisora.obtenerListaReproduccion().size());
+		assertEquals(lista, emisora.obtenerListaReproduccion());
+		
+		Contenido anuncio = new Anuncio();
+		lista.add(anuncio);
+		
+		emisora.agregar(anuncio, null);
+		
+		assertEquals(1, emisora.obtenerListaReproduccion().size());
+		assertEquals(lista, emisora.obtenerListaReproduccion());
+	}
+	
+	
+	@Test
+	public void testObtenerDuracionEmisoraNoVacia() throws ContenidoInexistenteException{
+		
+		Contenido emisora = new Emisora("RockFm");
+		int duracion = 0;
+		
+		assertEquals(duracion, emisora.obtenerDuracion());
+		
+		Contenido cancion = new Cancion("Cancion1", 133);
+		duracion += cancion.obtenerDuracion();
+		emisora.agregar(cancion, null);
+		
+		assertEquals(duracion, emisora.obtenerDuracion());
+
+		
+		Contenido anuncio = new Anuncio();
+		duracion += anuncio.obtenerDuracion();
+		emisora.agregar(anuncio, cancion);
+		
+		assertEquals(duracion, emisora.obtenerDuracion());
+	}
+	
+	
+	@Test
+	public void testEliminarContenidoEmisora() throws ContenidoInexistenteException{
+		
+		Contenido emisora = new Emisora("RockFm");
+		
+		Contenido cancion = new Cancion("Cancion1", 94);
+		Contenido anuncio = new Anuncio();
+		
+		List<Contenido> lista = new ArrayList<Contenido>();
+		
+		emisora.agregar(anuncio, null);
+		lista.add(anuncio);
+		emisora.agregar(cancion, anuncio);
+		lista.add(cancion);
+		emisora.agregar(anuncio, cancion);
+		lista.add(anuncio);
+		
+		assertEquals(3, emisora.obtenerListaReproduccion().size());
+		assertEquals(lista, emisora.obtenerListaReproduccion());
+		
+		emisora.eliminar(cancion);
+		lista.remove(1);
+		
+		assertEquals(2, emisora.obtenerListaReproduccion().size());
+		assertEquals(lista, emisora.obtenerListaReproduccion());
+		
+	}
     
 }
