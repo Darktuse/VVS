@@ -136,9 +136,11 @@ public class ServidorImpl implements Servidor {
 //		    char c = chars[random.nextInt(chars.length)];
 //		    sb.append(c);
 //		}
-		
-		String output = UUID.randomUUID().toString().substring(0, 10);
-		return output;
+		String output = new String();
+		while(true){
+		output = UUID.randomUUID().toString().substring(0, 10);
+		if(!findToken(tokensAdmitidos,output)) return output;
+		}
 		
 	}
 			
