@@ -1,32 +1,57 @@
 package es.udc.fic.vvs.Practica1;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Cancion implements Contenido {
+	
+	// Atributos de Cancion.
+
+	private String titulo;
+	private int duracion;
+	
+	// Constructores.
+	
+	public Cancion(){
+		
+	}
+	
+	public Cancion(String titulo, int duracion){
+		
+	}
+	
+	
+	// Métodos de la interfaz.
 
 	public String obtenerTitulo() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.titulo;
 	}
 
 	public int obtenerDuracion() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.duracion;
 	}
 
 	public List<Contenido> obtenerListaReproduccion() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Contenido> listaReproduccion = new ArrayList<Contenido>();
+		listaReproduccion.add(this);
+		
+		return listaReproduccion;
 	}
 
+	
 	public List<Contenido> buscar(String subcadena) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	
+	
+	
+	// NO TIENEN EFECTO EN ESTA CLASE.
+	
+	
 	public void agregar(Contenido contenido, Contenido predecesor) {
 		// NO TIENE EFECTO
-		
 	}
 
 	public void eliminar(Contenido contenido) {

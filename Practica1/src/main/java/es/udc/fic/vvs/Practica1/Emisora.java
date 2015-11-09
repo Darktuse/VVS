@@ -3,15 +3,30 @@ package es.udc.fic.vvs.Practica1;
 import java.util.List;
 
 public class Emisora implements Contenido {
+	
+	// Atributos de Emisora.
+	
+	private String titulo;
+	private int duracion;
+	
+	// Constructores.
+	
+	public Emisora(){
+		
+	}
+	
+	public Emisora(String titulo, int duracion){
+		
+	}
 
+	// Métodos de la interfaz.
+	
 	public String obtenerTitulo() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.titulo;
 	}
 
 	public int obtenerDuracion() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.duracion;
 	}
 
 	public List<Contenido> obtenerListaReproduccion() {
