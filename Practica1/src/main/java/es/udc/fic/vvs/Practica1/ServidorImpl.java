@@ -118,13 +118,16 @@ public class ServidorImpl implements Servidor {
 		if (token.isEmpty()){
 			c = buscarNome(subcadena);
 			if (c.isEmpty()) {
+				//Se a lista esta vacia enton vamos a mirar o servidor de respaldo en caso de ter un
 				if (servidorRespaldo!=null)
 					// se non atopou nada, chamase ao outro servidor para mirar o seu contido
 					c = servidorRespaldo.buscar(subcadena, token);
-			}
-			if (servidorRespaldo==null)
+			} else {
+			//en caso de que non estea vacio
 				c = insertaAnuncios(c);
 				return c;
+			
+			}
 		}
 		if (findToken(tokensAdmitidos, token)) {
 			c = buscarNome(subcadena);
