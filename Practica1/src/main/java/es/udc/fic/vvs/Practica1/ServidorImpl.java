@@ -124,14 +124,16 @@ public class ServidorImpl implements Servidor {
 		return c;
 	}
 	
-	public List<Contenido> buscaInterna(String subcadena) {
-		return buscarNome(subcadena);
-	}
+	
 	
 	
 	
 	
 	// FUNCIONES AUXILIARES
+	
+	public List<Contenido> buscaInterna(String subcadena) {
+		return buscarNome(subcadena);
+	}
 	
 	private void restarToken(Token t, List<Contenido> c ){
 		/*Funcion na cal se resta o numero ao token

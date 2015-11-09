@@ -119,11 +119,13 @@ public class ServidorImpl2 implements Servidor {
 		return c;
 	}
 
+	
+
+	// FUNCIONES AUXILIARES
+	
 	public List<Contenido> buscaInterna(String subcadena) {
 		return buscarNome(subcadena);
 	}
-
-	// FUNCIONES AUXILIARES
 
 	private void restarToken(Token t, List<Contenido> c ){
 		/*Funcion na cal se resta o numero ao token
