@@ -12,11 +12,18 @@ public class ServidorImpl implements Servidor {
 	private List<Contenido> contenidos = new ArrayList<Contenido>();
 	private List<Token> tokensAdmitidos = new ArrayList<Token>();
 	private static final String tokenSpecial = "tokenspecial";
+	private Servidor servidorRespaldo = null;
 	
 	// Constructores
 	
 	public ServidorImpl(){
 		
+	}
+	
+	public ServidorImpl(String nombre, Servidor servidorRespaldo) {
+		super();
+		this.nombre=nombre;
+		this.servidorRespaldo = servidorRespaldo;
 	}
 	
 	
@@ -113,8 +120,7 @@ public class ServidorImpl implements Servidor {
 			c = buscarNome(subcadena);
 			if (c.isEmpty()) {
 				// se non atopou nada, chamase ao outro servidor para mirar o seu contido
-				ServidorImpl2 serv = new ServidorImpl2();
-				c = serv.buscaInterna(subcadena);
+				c = servidorRespaldo.buscar(subcadena, token);
 			}
 			c = insertaAnuncios(c);
 			return c;
@@ -124,9 +130,10 @@ public class ServidorImpl implements Servidor {
 			Token t = buscaToken(token);
 			if (c.isEmpty()) {
 				// se non atopou nada, chamase ao outro servidor para mirar o seu contido
-				ServidorImpl2 serv = new ServidorImpl2();
-				c = serv.buscaInterna(subcadena);
-				c = restarToken(t,c);
+				if (servidorRespaldo!=null){
+					c = servidorRespaldo.buscar(subcadena, token);
+					c = restarToken(t,c);
+				}
 			} else 
 				c = restarToken(t,c);
 		}
