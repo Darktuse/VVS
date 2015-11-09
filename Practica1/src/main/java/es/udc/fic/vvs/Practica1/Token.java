@@ -46,6 +46,14 @@ public class Token {
 		return false;
 	}
 	
+	public boolean restarVarios(int num){
+		if (numero>0){
+			numero -= num;
+			return true;
+		}
+		return false;
+	}
+	
 	
 	
 }
