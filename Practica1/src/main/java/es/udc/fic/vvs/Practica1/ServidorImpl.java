@@ -20,7 +20,7 @@ public class ServidorImpl implements Servidor {
 	
 	
 	public ServidorImpl(String nombre) {
-		
+		super();
 		this.nombre=nombre;
 	}
 	
@@ -75,19 +75,43 @@ public class ServidorImpl implements Servidor {
 	}
 
 	public void agregar(Contenido contenido, String token) {
-		// TODO Auto-generated method stub
+		// TODO FALTA EXCEPCION DE TOKEN NO VALIDO
+		
+		if (findToken(tokensAdmitidos, token)){
+			this.contenidos.add(contenido);
+		} else {
+			// TOKEN NO VALIDO!
+		}
 		
 	}
 
+	
 	public void eliminar(Contenido contenido, String token) {
 		// TODO Auto-generated method stub
 		
+		if (findToken(tokensAdmitidos, token)){
+			
+			for (int i = 0; i < contenidos.size(); i++){
+				if (contenidos.get(i) == contenido) {
+					contenidos.remove(i);
+					break;
+				}
+			
+			}
+			
+		} else {
+			// TOKEN NO VALIDO!
+		}
+		
 	}
 
+	
 	public List<Contenido> buscar(String subcadena, String token) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
 	
 	
 	// FUNCIONES AUXILIARES
