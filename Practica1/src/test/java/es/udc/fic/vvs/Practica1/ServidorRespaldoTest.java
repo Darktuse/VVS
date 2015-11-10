@@ -159,7 +159,7 @@ public class ServidorRespaldoTest {
 	public void eliminarTokenInvalidoTest() throws InvalidTokenException{
 		ServidorImplRespaldo respaldo = (ServidorImplRespaldo) servidorValidconContenidos();
 		ServidorImplRespaldo servidor = (ServidorImplRespaldo) servidorValidvacioConRespaldoConCancion(respaldo);
-		servidor.eliminar(new Cancion(), "Terry Gilliam");
+		servidor.eliminar(new Cancion("py",5), "Terry Gilliam");
 
 	}
 
