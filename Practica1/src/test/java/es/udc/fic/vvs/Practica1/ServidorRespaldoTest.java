@@ -143,5 +143,24 @@ public class ServidorRespaldoTest {
 		servidor.baja(t);
 		servidor.baja(t);
 	}
+	
+	@Test
+	public void eliminarCancionServidorPrincipalTest() throws InvalidTokenException{
+		ServidorImplRespaldo respaldo = (ServidorImplRespaldo) servidorValidconContenidos();
+		ServidorImplRespaldo servidor = (ServidorImplRespaldo) servidorValidvacioConRespaldoConCancion(respaldo);
+		String t = servidor.alta();
+		assertEquals(servidor.buscar("cancion 1", t).size(),1);
+		servidor.eliminar(servidor.buscar("cancion 1", t).get(0), tokenSpecial);
+		//ahora vai a valer 8 porque se gastou un token no buscar de eliminar de antes
+		assertEquals(servidor.buscar("cancion 1", t).size(),8);
+	}
+	
+	@Test(expected = InvalidTokenException.class)
+	public void eliminarTokenInvalidoTest() throws InvalidTokenException{
+		ServidorImplRespaldo respaldo = (ServidorImplRespaldo) servidorValidconContenidos();
+		ServidorImplRespaldo servidor = (ServidorImplRespaldo) servidorValidvacioConRespaldoConCancion(respaldo);
+		servidor.eliminar(new Cancion(), "Terry Gilliam");
+
+	}
 
 }
