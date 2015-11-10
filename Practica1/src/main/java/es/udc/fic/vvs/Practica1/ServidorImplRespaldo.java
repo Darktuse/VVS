@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class ServidorImpl implements Servidor {
+public class ServidorImplRespaldo implements Servidor {
 
 	// Atributos del servidor
 
@@ -12,21 +12,21 @@ public class ServidorImpl implements Servidor {
 	private List<Contenido> contenidos = new ArrayList<Contenido>();
 	private List<Token> tokensAdmitidos = new ArrayList<Token>();
 	private static final String tokenSpecial = "tokenspecial";
-	private ServidorImpl servidorRespaldo = null;
+	private ServidorImplRespaldo servidorRespaldo = null;
 
 	// Constructores
 
-	public ServidorImpl() {
+	public ServidorImplRespaldo() {
 
 	}
 
-	public ServidorImpl(String nombre, Servidor servidorRespaldo) {
+	public ServidorImplRespaldo(String nombre, Servidor servidorRespaldo) {
 		super();
 		this.nombre = nombre;
-		this.servidorRespaldo = (ServidorImpl) servidorRespaldo;
+		this.servidorRespaldo = (ServidorImplRespaldo) servidorRespaldo;
 	}
 
-	public ServidorImpl(String nombre) {
+	public ServidorImplRespaldo(String nombre) {
 		super();
 		this.nombre = nombre;
 	}

@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 
 
 /**
- * Unit test for simple Contenido.
+ * Unit test for simple ServidorSimple.
  */
 public class ServidorTest {
     
@@ -147,7 +147,7 @@ public class ServidorTest {
 	
 	private Servidor crearServidor(){
 				
-		Servidor servidor = new ServidorImpl("Servidor");
+		Servidor servidor = new ServidorImplSimple("Servidor");
 		Contenido cancion1 = new Cancion("Cancion1", 1);
 		Contenido cancion2 = new Cancion("Cancion2", 2);
 		Contenido cancion3 = new Cancion("Cancion3", 3);
@@ -165,7 +165,6 @@ public class ServidorTest {
 			emisora1.agregar(cancion1, cancion8);
 			emisora1.agregar(anuncio, cancion6);
 		} catch (ContenidoInexistenteException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
@@ -181,7 +180,6 @@ public class ServidorTest {
 			servidor.agregar(cancion6, tokenSpecial);
 			servidor.agregar(emisora1, tokenSpecial);
 		} catch (InvalidTokenException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
