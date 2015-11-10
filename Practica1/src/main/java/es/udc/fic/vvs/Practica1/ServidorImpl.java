@@ -188,7 +188,7 @@ public class ServidorImpl implements Servidor {
 			c = c.subList(0, t.getNumero());
 			// como o toquen quedaria a cero xa se borra e listo
 			String token = t.getToken();
-			baja(t.getToken());
+			baja(token);
 		}
 		return c;
 	}
