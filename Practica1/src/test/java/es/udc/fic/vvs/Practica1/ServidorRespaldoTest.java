@@ -87,10 +87,18 @@ public class ServidorRespaldoTest {
 	public void busquedaServidorRespaldoconAnunciosTest() throws InvalidTokenException{
 		ServidorImpl respaldo = (ServidorImpl) servidorValidconContenidos();
 		ServidorImpl servidor = (ServidorImpl) servidorValidvacioConRespaldo(respaldo);
-		String t = servidor.alta();
 		assertEquals(servidor.buscar("cancion 2", "").get(0).obtenerTitulo(),"PUBLICIDAD");
 		assertEquals(servidor.buscar("cancion 2", "").get(1).obtenerTitulo(),"cancion 2");
 		assertEquals(servidor.buscar("cancion 2", "").size(),2);
+	}
+	
+	@Test
+	public void busquedaServidorRespaldoconAnunciosEnServidorPrincipalTest() throws InvalidTokenException{
+		ServidorImpl respaldo = (ServidorImpl) servidorValidconContenidos();
+		ServidorImpl servidor = (ServidorImpl) servidorValidvacioConRespaldoConCancion(respaldo);
+		assertEquals(servidor.buscar("cancion 1", "").get(0).obtenerTitulo(),"PUBLICIDAD");
+		assertEquals(servidor.buscar("cancion 1", "").get(1).obtenerTitulo(),"cancion 1");
+		assertEquals(servidor.buscar("cancion 1", "").size(),2);
 	}
 	
 	@Test(expected = InvalidTokenException.class)
