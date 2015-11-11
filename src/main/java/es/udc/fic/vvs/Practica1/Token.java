@@ -16,8 +16,8 @@ package es.udc.fic.vvs.Practica1;
 
 public class Token {
 
-	String token;
-	int numero;
+	private String token;
+	private int numero;
 	
 	/**
 	 * Constructor del Token
