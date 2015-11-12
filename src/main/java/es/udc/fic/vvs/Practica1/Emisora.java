@@ -52,8 +52,11 @@ public class Emisora implements Contenido {
 	 * @return La duracion total de la emisora.
 	 */
 	public int obtenerDuracion() {
-		
-		return this.duracion;
+		int duracion = 0;
+		for (Contenido c: contenidos){
+			duracion += c.obtenerDuracion();
+		}
+		return duracion;
 	}
 
 	

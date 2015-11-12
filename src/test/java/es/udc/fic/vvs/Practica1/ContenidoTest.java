@@ -156,6 +156,29 @@ public class ContenidoTest {
 	
 	
 	@Test
+	public void testObtenerDuracionBug() throws ContenidoInexistenteException{
+		
+		Contenido emisora = new Emisora("RockFm");
+		assertEquals(0, emisora.obtenerDuracion());
+		
+		Contenido emisora2 = new Emisora("m80");
+		emisora.agregar(emisora2, null);
+		assertEquals(0, emisora.obtenerDuracion());
+		assertEquals(0, emisora2.obtenerDuracion());
+
+		Contenido cancion = new Cancion("tituloCancion", 55);
+		emisora.agregar(cancion, emisora2);
+		
+		assertEquals(55, emisora.obtenerDuracion());
+		assertEquals(0, emisora2.obtenerDuracion());
+		
+		emisora2.agregar(cancion, null);
+		assertEquals(55, emisora2.obtenerDuracion());
+		assertEquals(110, emisora.obtenerDuracion());
+	}
+	
+	
+	@Test
 	public void testEliminarContenidoEmisora() throws ContenidoInexistenteException{
 		
 		Contenido emisora = new Emisora("RockFm");
