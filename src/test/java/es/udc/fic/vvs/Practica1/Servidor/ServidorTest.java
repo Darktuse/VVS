@@ -1,10 +1,18 @@
-package es.udc.fic.vvs.Practica1;
+package es.udc.fic.vvs.Practica1.Servidor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
 
+import es.udc.fic.vvs.Practica1.Contenido.Anuncio;
+import es.udc.fic.vvs.Practica1.Contenido.Cancion;
+import es.udc.fic.vvs.Practica1.Contenido.Contenido;
+import es.udc.fic.vvs.Practica1.Contenido.ContenidoInexistenteException;
+import es.udc.fic.vvs.Practica1.Contenido.Emisora;
+import es.udc.fic.vvs.Practica1.Servidor.InvalidTokenException;
+import es.udc.fic.vvs.Practica1.Servidor.Servidor;
+import es.udc.fic.vvs.Practica1.Servidor.ServidorImplSimple;
 import static org.junit.Assert.*;
 
 

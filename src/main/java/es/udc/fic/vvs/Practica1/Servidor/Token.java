@@ -1,4 +1,4 @@
-package es.udc.fic.vvs.Practica1;
+package es.udc.fic.vvs.Practica1.Servidor;
 
 /**
  * En esta clase se definen la estructura del Token,

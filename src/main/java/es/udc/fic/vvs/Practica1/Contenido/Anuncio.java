@@ -1,60 +1,62 @@
-package es.udc.fic.vvs.Practica1;
+package es.udc.fic.vvs.Practica1.Contenido;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
- * En esta clase se definen las canciones, que son un tipo de Contenido 
+ * En esta clase se definen los anuncios, que son un tipo de Contenido 
  * y que, por lo tanto, consiste en una implementacion de dicha interfaz.
  * 
  * 
  * @author elenamdf, mateof, Darktuse
  * @version 10/11/2015
  * 
- *
+ * 
  */
 
-public class Cancion implements Contenido {
+public class Anuncio implements Contenido {
 	
-	// Atributos de Cancion.
-
+	// Atributos de la clase.
+	
 	private String titulo;
 	private int duracion;
-	
+
+
 	/**
-	 * Constructor para la cancion.
-	 * @param titulo El titulo de la cancion.
-	 * @param duracion La duracion de la cancion.
+	 * Constructor para el Anuncio.
 	 */
-	public Cancion(String titulo, int duracion){
-		this.titulo = titulo;
-		this.duracion = duracion;
+	public Anuncio(){
+		this.titulo = "PUBLICIDAD";
+		this.duracion = 5;
 	}
 	
-	
+		
 	// Métodos de la interfaz.
 
-	/**
+	/** 
 	 * Metodo que devuelve una cadena de caracteres correspondiente
-	 * con el titulo de la cancion.
-	 * @return El titulo de la cancion.
+	 * con el titulo del anuncio.
+	 * @return El titulo del anuncio.
 	 */
 	public String obtenerTitulo() {
-		return this.titulo;
+		// Los anuncios siempre tienen como título "PUBLICIDAD".
+		return titulo;
 	}
 
-	/**
-	 * Metodo que devuelve la duracion de la cancion.
-	 * @return La duracion de la cancion.
+	
+	/** 
+	 * Metodo que devuelve el numero de segundos que dura un anuncio.
+	 * @return La duracion del anuncio.
 	 */
 	public int obtenerDuracion() {
-		return this.duracion;
+		// Los anuncios siempre duran 5 segundos.
+		return duracion;
 	}
 
+	
 	/** 
 	 * Metodo que devuelve la lista de reproduccion correspondiente con el
-	 * contenido, que en este caso, es la propia cancion.
+	 * contenido, que en este caso, es el propio anuncio.
 	 * @return Una lista con los contenidos existentes en la lista de reproduccion.
 	 */
 	public List<Contenido> obtenerListaReproduccion() {
@@ -64,13 +66,12 @@ public class Cancion implements Contenido {
 		return listaReproduccion;
 	}
 
-	
 	/**
-	 * Metodo que devuelve la lista de contenidos que contienen la subcadena que
-	 * se pasa como parametro en su titulo.
-	 * @param subcadena La subcadena que se quiere buscar en el titulo de las canciones
-	 * @return Una lista de contenido que incluya la cancion en caso de que su titulo contenga la subcadena. Si no,
-	 * devolvera una lista vacia.
+	 * Metodo que devuelve una lista de contenidos en los que el titulo contenga
+	 * la subcadena que se le pasa como parametro. En caso del Anuncio solo
+	 * devolvera el propio anuncio si contiene la subcadena.
+	 * @param subcadena La cadena de caracteres que se quiere buscar en el titulo.
+	 * @return Una lista de contenidos existentes que contengan la subcadena en su titulo.
 	 */
 	public List<Contenido> buscar(String subcadena) {
 
@@ -84,21 +85,21 @@ public class Cancion implements Contenido {
 		
 		return contenidos;
 	}
-
 	
 	
 	
 	// NO TIENEN EFECTO EN ESTA CLASE.
-	
+
 	/**
-	 * El metodo de agregar no tiene efecto en la clase Cancion.
+	 * El metodo de agregar no tiene efecto en la clase Anuncio.
 	 */
 	public void agregar(Contenido contenido, Contenido predecesor) {
 		// NO TIENE EFECTO
+		
 	}
 
 	/**
-	 * El metodo de eliminar no tiene efecto en la clase Cancion.
+	 * El metodo de eliminar no tiene efecto en la clase Anuncio.
 	 */
 	public void eliminar(Contenido contenido) {
 		// NO TIENE EFECTO
