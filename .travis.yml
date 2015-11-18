@@ -1,5 +1,5 @@
 language: java
-sudo: false
+before_install: mvn install -DskipTests=true
 install: mvn test
 after_success:
   - mvn clean cobertura:cobertura coveralls:report
