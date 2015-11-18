@@ -1,7 +1,8 @@
-package es.udc.fic.vvs.Practica1;
+package es.udc.fic.vvs.Practica1.Servidor;
 
 import java.util.List;
-import es.udc.fic.vvs.Practica1.Contenido;
+
+import es.udc.fic.vvs.Practica1.Contenido.Contenido;
 
 /**
  * Esta es la interfaz correspondiente con los diferentes contenidos.

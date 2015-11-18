@@ -1,4 +1,4 @@
-package es.udc.fic.vvs.Practica1;
+package es.udc.fic.vvs.Practica1.Contenido;
 
 import java.util.ArrayList;
 import java.util.List;

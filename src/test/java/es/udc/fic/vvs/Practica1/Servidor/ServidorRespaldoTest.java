@@ -1,7 +1,12 @@
-package es.udc.fic.vvs.Practica1;
+package es.udc.fic.vvs.Practica1.Servidor;
 
 import org.junit.Test;
 
+import es.udc.fic.vvs.Practica1.Contenido.Cancion;
+import es.udc.fic.vvs.Practica1.Contenido.Emisora;
+import es.udc.fic.vvs.Practica1.Servidor.InvalidTokenException;
+import es.udc.fic.vvs.Practica1.Servidor.Servidor;
+import es.udc.fic.vvs.Practica1.Servidor.ServidorImplRespaldo;
 import static org.junit.Assert.*;
 
 public class ServidorRespaldoTest {

@@ -1,8 +1,11 @@
-package es.udc.fic.vvs.Practica1;
+package es.udc.fic.vvs.Practica1.Servidor;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import es.udc.fic.vvs.Practica1.Contenido.Anuncio;
+import es.udc.fic.vvs.Practica1.Contenido.Contenido;
 
 /**
  * 

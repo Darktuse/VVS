@@ -1,4 +1,4 @@
-package es.udc.fic.vvs.Practica1;
+package es.udc.fic.vvs.Practica1.Servidor;
 
 /**
  * Esta es la clase correspondiente con la Excepcion que nos
