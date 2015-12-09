@@ -94,7 +94,7 @@ public class ServidorImplSimple implements Servidor {
 			throw new InvalidTokenException();
 		} else {
 			for (int i = 0; i < tokensAdmitidos.size(); i++) {
-				if (tokensAdmitidos.get(i).getToken() == token) {
+				if (tokensAdmitidos.get(i).getToken().equals(token)) {
 					tokensAdmitidos.remove(i);
 					break;
 				}
@@ -286,11 +286,11 @@ public class ServidorImplSimple implements Servidor {
 	 * @return El token que se le devolvera al usuario.
 	 */
 	private String generarToken() {
-		String output = new String();
+		String salida = null;
 		while (true) {
-			output = UUID.randomUUID().toString().substring(0, 10);
-			if (!findToken(tokensAdmitidos, output))
-				return output;
+			salida = UUID.randomUUID().toString().substring(0, 10);
+			if (!findToken(tokensAdmitidos, salida))
+				return salida;
 		}
 
 	}
