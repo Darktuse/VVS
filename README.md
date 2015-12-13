@@ -14,20 +14,30 @@ Junit
 -----
 
 Para las pruebas dinámicas. 
+
 Ejecutar con: mvn test
 
 PIT
 ---
 
 Para la calidad de las pruebas mediante mutation test.
+
 Ejecutar con: mvn test org.pitest:pitest-maven:mutationCoverage
+
 Generará un directorio con los informes en target/pit-reports
 
 FindBugs
 --------
 
 Para las pruebas estáticas del proyecto.
+
 Ejecutar con: 
 - mvn test
 - mvn findbugs:check
+
 Generará un xml con los bugs y warnings que encuentre en el directorio target con la misma información que la salida por la terminal.
+
+Cobertura
+---------
+
+Aunque no se use directamente, tanto travis como PIT nos da la información sobre la cobertura de las pruebas.
