@@ -275,9 +275,9 @@ public class ServidorImplRespaldo implements Servidor {
 		} else {
 			// se e maior ou igual reduciriase a lista ao tamaño do token que
 			// queda
-			System.out.println("tamaño de c antes: "+c.size());
+//			System.out.println("tamaño de c antes: "+c.size());
 			c = c.subList(0, t.getNumero());
-			System.out.println("tamaño de c despois :"+c.size());
+//			System.out.println("tamaño de c despois :"+c.size());
 			// como o toquen quedaria a cero xa se borra e listo
 			String token = t.getToken();
 			baja(token);
