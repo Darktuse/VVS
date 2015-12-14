@@ -85,7 +85,7 @@ public class Token {
 	 * @return True si se ha podido realizar la resta de manera correcta, False en el caso contrario.
 	 */
 	public boolean restarVarios(int num){
-		if (numero>0){
+		if (numero>0 && numero>num) {
 			numero -= num;
 			return true;
 		}
