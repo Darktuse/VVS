@@ -136,6 +136,24 @@ public class ContenidoTest {
 		assertEquals(lista, emisora.obtenerListaReproduccion());
 	}
 	
+	@Test(expected=ContenidoInexistenteException.class)
+	public void testAgregarContenidoEmisoraNoVacia() throws ContenidoInexistenteException{
+		
+		Contenido emisora = new Emisora("RockFm");
+		List<Contenido> lista = new ArrayList<Contenido>();
+		
+		assertEquals(0, emisora.obtenerListaReproduccion().size());
+		assertEquals(lista, emisora.obtenerListaReproduccion());
+		
+		Contenido anuncio = new Anuncio();
+		lista.add(anuncio);
+		
+		emisora.agregar(anuncio, null);
+		emisora.agregar(anuncio, null);
+		
+		assertEquals(1, emisora.obtenerListaReproduccion().size());
+		assertEquals(lista, emisora.obtenerListaReproduccion());
+	}
 	
 	@Test
 	public void testObtenerDuracionEmisoraNoVacia() throws ContenidoInexistenteException{
@@ -223,6 +241,18 @@ public class ContenidoTest {
 		
 		emisora.agregar(cancion1, null);
 		emisora.agregar(anuncio, cancion2);
+		
+	}
+	
+	@Test(expected = ContenidoInexistenteException.class)
+	public void testAgregarContenidoEmisoraVaciaPredecesorNoNulo() throws ContenidoInexistenteException{
+		
+		Contenido emisora = new Emisora("RockFm");
+		
+		Contenido cancion1= new Cancion("Cancion1", 93);
+		Contenido anuncio = new Anuncio();
+		
+		emisora.agregar(cancion1, anuncio);
 		
 	}
 	

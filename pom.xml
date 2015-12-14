@@ -49,11 +49,6 @@
 			<version>1.1.2</version>
 		</dependency>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.11</version>
-		</dependency>
-		<dependency>
 			<groupId>net.sf.jpf</groupId>
 			<artifactId>jpf</artifactId>
 			<version>1.5</version>
@@ -65,8 +60,11 @@
 			<version>1.5</version>
 			<scope>provided</scope>
 		</dependency>
-
-
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>1.10.19</version>
+		</dependency>
 	</dependencies>
 	<build>
 
@@ -91,11 +89,26 @@
 					<formats>
 						<format>html</format>
 						<format>xml</format>
-						<maxmem>256m</maxmem>
-						+
-						<aggregate>true</aggregate>
 					</formats>
 				</configuration>
+				<executions>
+					<execution>
+						<id>clean</id>
+						<phase>pre-site</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>instrument</id>
+						<phase>site</phase>
+						<goals>
+							<goal>instrument</goal>
+							<goal>cobertura</goal>
+						</goals>
+					</execution>
+				</executions>
+
 			</plugin>
 			<plugin>
 				<groupId>org.eluder.coveralls</groupId>
@@ -122,7 +135,6 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>findbugs-maven-plugin</artifactId>
-				<version>3.0.3</version>
 			</plugin>
 
 			<plugin>
