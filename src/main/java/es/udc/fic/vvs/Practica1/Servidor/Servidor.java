@@ -2,6 +2,10 @@ package es.udc.fic.vvs.Practica1.Servidor;
 
 import java.util.List;
 
+import org.junit.contrib.theories.Theories;
+import org.junit.runner.RunWith;
+import com.pholser.junit.quickcheck.runner.*;
+
 import es.udc.fic.vvs.Practica1.Contenido.Contenido;
 
 /**
@@ -14,7 +18,7 @@ import es.udc.fic.vvs.Practica1.Contenido.Contenido;
  * 
  * 
  */
-
+@RunWith(JUnitQuickcheck.class)
 public interface Servidor  {
 		
 		/**

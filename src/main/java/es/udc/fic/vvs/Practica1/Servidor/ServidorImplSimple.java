@@ -6,6 +6,9 @@ import java.util.UUID;
 
 import es.udc.fic.vvs.Practica1.Contenido.Anuncio;
 import es.udc.fic.vvs.Practica1.Contenido.Contenido;
+import etm.core.configuration.EtmManager;
+import etm.core.monitor.EtmMonitor;
+import etm.core.monitor.EtmPoint;
 
 /**
  * 
@@ -22,7 +25,7 @@ import es.udc.fic.vvs.Practica1.Contenido.Contenido;
 public class ServidorImplSimple implements Servidor {
 
 	// Atributos del servidor
-
+	private static final EtmMonitor etmMonitor = EtmManager.getEtmMonitor();
 	private String nombre;
 	private List<Contenido> contenidos = new ArrayList<Contenido>();
 	private List<Token> tokensAdmitidos = new ArrayList<Token>();
@@ -61,6 +64,7 @@ public class ServidorImplSimple implements Servidor {
 	 * @return El token (equivalente a una password).
 	 */
 	public String alta() {
+		EtmPoint point = etmMonitor.createPoint("BusinessService:altaServidorSimple");
 		// Ten que devolver o token. Serve para dar
 		// de alta un usuario no servidor.
 		String newToken = null;
@@ -92,6 +96,7 @@ public class ServidorImplSimple implements Servidor {
 	 *             baja un token que ya no sea valido.
 	 */
 	public void baja(String token) throws InvalidTokenException {
+		EtmPoint point = etmMonitor.createPoint("BusinessService:bajaServidorSimple");
 		// Dase de baixa o token, polo que non se recoñecerá
 		// como válido nunca máis.
 		// IMPLICITAMENTE cando buscas e superas os 10 contidos.
@@ -118,6 +123,7 @@ public class ServidorImplSimple implements Servidor {
 	 */
 	public void agregar(Contenido contenido, String token)
 			throws InvalidTokenException {
+		EtmPoint point = etmMonitor.createPoint("BusinessService:agregarServidorSimple");
 
 		if (tokenSpecial.equals(token)) {
 			this.contenidos.add(contenido);
@@ -143,7 +149,7 @@ public class ServidorImplSimple implements Servidor {
 	 */
 	public void eliminar(Contenido contenido, String token)
 			throws InvalidTokenException {
-
+		EtmPoint point = etmMonitor.createPoint("BusinessService:eliminarServidorSimple");
 		if (tokenSpecial.equals(token)) {
 
 			for (int i = 0; i < contenidos.size(); i++) {
@@ -185,6 +191,7 @@ public class ServidorImplSimple implements Servidor {
 	 */
 	public List<Contenido> buscar(String subcadena, String token)
 			throws InvalidTokenException {
+		EtmPoint point = etmMonitor.createPoint("BusinessService:buscarServidorSimple");
 		List<Contenido> c = new ArrayList<Contenido>();
 		if (token.isEmpty()) {
 			c = buscarNome(subcadena);
@@ -221,6 +228,7 @@ public class ServidorImplSimple implements Servidor {
 	 * @return La lista de contenidos con la publicidad ya añadida.
 	 */
 	private List<Contenido> insertaAnuncios(List<Contenido> l) {
+		EtmPoint point = etmMonitor.createPoint("BusinessService:insertarAnunciosServidorSimple");
 		int i = 0;
 		Anuncio a = new Anuncio();
 		List<Contenido> cont = new ArrayList<Contenido>();

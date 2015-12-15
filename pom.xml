@@ -21,7 +21,31 @@
 			<artifactId>junit</artifactId>
 			<version>4.8.1</version>
 		</dependency>
+		<!-- JUnit-Quickcheck  -->
+			      <dependency>
+      <groupId>net.java.quickcheck</groupId>
+      <artifactId>quickcheck</artifactId>
+      <version>0.6</version>
+      <scope>test</scope>
+    </dependency>
+		  <dependency>
+	        <groupId>com.pholser</groupId>
+	        <artifactId>junit-quickcheck-core</artifactId>
+	        <version>0.6-alpha-1</version>
+	      </dependency>
 
+	      <dependency>
+	        <groupId>com.pholser</groupId>
+	        <artifactId>junit-quickcheck-generators</artifactId>
+	        <version>0.6-alpha-1</version>
+	      </dependency>
+	      <!-- JETM  -->
+	      <dependency>
+				<groupId>fm.void.jetm</groupId>
+				<artifactId>jetm</artifactId>
+				<version>1.2.3</version>
+			</dependency>
+				      
 		<dependency>
 			<groupId>org.graphwalker</groupId>
 			<artifactId>graphwalker-core</artifactId>
