@@ -15,146 +15,186 @@ import es.udc.fic.vvs.Practica1.Servidor.Servidor;
 import es.udc.fic.vvs.Practica1.Servidor.ServidorImplSimple;
 import static org.junit.Assert.*;
 
-
 /**
  * Unit test for simple ServidorSimple.
  */
 public class ServidorTest {
-    
+
 	private static final String tokenSpecial = "tokenspecial";
 
-	
 	@Test
-    public void obtenerContenidoTest() throws InvalidTokenException
-    {
+	public void obtenerContenidoTest() throws InvalidTokenException {
 
 		Servidor servidor = crearServidor();
-		
+
 		String token = servidor.alta();
-		
+
 		List<Contenido> contenidos = servidor.buscar("4", token);
-		
+
 		assertEquals(contenidos.size(), 1);
-		
-    }
-    
-	
+
+	}
+
 	@Test
-	public void obtenerContenidoSinTokenTest() throws InvalidTokenException{
-		
+	public void obtenerContenidoSinTokenTest() throws InvalidTokenException {
+
 		Servidor servidor = crearServidor();
-		
+
 		String token = "No valido";
-	
-		//Debe devolver una lista vacia
-		assert(servidor.buscar("4", token).isEmpty()==true);
-		
+
+		// Debe devolver una lista vacia
+		assert (servidor.buscar("4", token).isEmpty() == true);
+
 	}
-	
+
 	@Test
-	public void darBajaTokenTest() throws InvalidTokenException{
-		
+	public void darBajaTokenTest() throws InvalidTokenException {
+
 		Servidor servidor = crearServidor();
-		
+
 		String token = servidor.alta();
-		
+
 		List<Contenido> contenidos = servidor.buscar("4", token);
-		
-		assert(contenidos.isEmpty()==false);
-		
+
+		assert (contenidos.isEmpty() == false);
+
 		servidor.baja(token);
-		
+
 		contenidos = servidor.buscar("4", token);
-		
-		assert(contenidos.isEmpty()==true);
+
+		assert (contenidos.isEmpty() == true);
 	}
-	
+
 	@Test(expected = InvalidTokenException.class)
-	public void darBajaTokenDosVeces() throws InvalidTokenException{
+	public void darBajaTokenDosVeces() throws InvalidTokenException {
+
+		Servidor servidor = crearServidor();
+
+		String token = servidor.alta();
+
+		servidor.baja(token);
+
+		servidor.baja(token);
+
+	}
+
+	// Hay mas tokens al intentar dar de baja por segunda vez
+	@Test(expected = InvalidTokenException.class)
+	public void darBajaTokenDosVecesVariosAdmitidos() throws InvalidTokenException{
 
 		Servidor servidor = crearServidor();
 		
 		String token = servidor.alta();
+		for (int i=0; i<10;i++)
+			servidor.alta();
 		
 		servidor.baja(token);
 		
 		servidor.baja(token);
 		
 	}
-	
+
 	@Test(expected = InvalidTokenException.class)
-	public void agregarContenidoExceptionTest() throws InvalidTokenException{
+	public void agregarContenidoExceptionTest() throws InvalidTokenException {
 
 		Servidor servidor = crearServidor();
-		
+
 		String token = servidor.alta();
-		
+
 		servidor.agregar(new Anuncio(), token);
 
 	};
 
 	@Test
-	public void eliminarContenidoTest() throws InvalidTokenException{
+	public void eliminarContenidoTest() throws InvalidTokenException {
 
 		Servidor servidor = crearServidor();
-		
+
 		String token = servidor.alta();
-		
+
 		List<Contenido> contenidos = servidor.buscar("4", token);
-		
+
 		assertEquals(contenidos.size(), 1);
 
 		servidor.eliminar(contenidos.get(0), tokenSpecial);
 
 		contenidos = servidor.buscar("4", token);
-		
+
 		assertEquals(contenidos.size(), 0);
 
-	};	
-	
+	};
+
 	@Test
-	public void buscarTokenVacioTest() throws InvalidTokenException{
+	public void buscarTokenVacioTest() throws InvalidTokenException {
 
 		Servidor servidor = crearServidor();
-		
+
 		String token = "";
-		
+
 		List<Contenido> contenidos = servidor.buscar("Cancion2", token);
-			
-		//Encuentra 4 Cancion2 + 2 anuncios
+
+		// Encuentra 4 Cancion2 + 2 anuncios
 		assertEquals(contenidos.size(), 6);
-		
+
 	};
 
 	@Test
-	public void buscarTokenNoAdmitidoTest() throws InvalidTokenException{
+	public void buscarListaCancionesVaciaTest() throws InvalidTokenException {
 
-		Servidor servidor = crearServidor();
-		
-		String token = "No admitido";
-		
+		Servidor servidor = new ServidorImplSimple("Servidor");
+
+		String token = "";
+
 		List<Contenido> contenidos = servidor.buscar("Cancion2", token);
-			
-		assert(contenidos.isEmpty());
-		
+
+		assertTrue(contenidos.isEmpty());
 	};
+
 	
-	@Test(expected = InvalidTokenException.class)
-	public void eliminarContenidoExceptionTest() throws InvalidTokenException{
+	// Lista de canciones mayor que elnumero del token
+	@Test
+	public void buscarListaCancionesTest() throws InvalidTokenException {
 
 		Servidor servidor = crearServidor();
-		
+
 		String token = servidor.alta();
-		
+
+		List<Contenido> contenidos = servidor.buscar("Cancion", token);
+
+		// Reduce la lista a 10, la catidad del numero del token
+		assertEquals(contenidos.size(),10);
+	};
+
+	
+	@Test
+	public void buscarTokenNoAdmitidoTest() throws InvalidTokenException {
+
+		Servidor servidor = crearServidor();
+
+		String token = "No admitido";
+
+		List<Contenido> contenidos = servidor.buscar("Cancion2", token);
+
+		assert (contenidos.isEmpty());
+
+	};
+
+	@Test(expected = InvalidTokenException.class)
+	public void eliminarContenidoExceptionTest() throws InvalidTokenException {
+
+		Servidor servidor = crearServidor();
+
+		String token = servidor.alta();
+
 		List<Contenido> contenidos = servidor.buscar("4", token);
-		
+
 		assertEquals(contenidos.size(), 1);
 
 		servidor.eliminar(new Anuncio(), token);
 	};
-	
-	private Servidor crearServidor(){
-				
+
+	private Servidor crearServidor() {
+
 		Servidor servidor = new ServidorImplSimple("Servidor");
 		Contenido cancion1 = new Cancion("Cancion1", 1);
 		Contenido cancion2 = new Cancion("Cancion2", 2);
@@ -175,7 +215,7 @@ public class ServidorTest {
 		} catch (ContenidoInexistenteException e1) {
 			e1.printStackTrace();
 		}
-		
+
 		try {
 			servidor.agregar(cancion1, tokenSpecial);
 			servidor.agregar(cancion2, tokenSpecial);
@@ -186,12 +226,14 @@ public class ServidorTest {
 			servidor.agregar(cancion4, tokenSpecial);
 			servidor.agregar(cancion5, tokenSpecial);
 			servidor.agregar(cancion6, tokenSpecial);
+			servidor.agregar(cancion7, tokenSpecial);
+			servidor.agregar(cancion8, tokenSpecial);
 			servidor.agregar(emisora1, tokenSpecial);
 		} catch (InvalidTokenException e) {
 			e.printStackTrace();
 		}
-		
+
 		return servidor;
 	}
-    
+
 }

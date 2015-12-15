@@ -11,9 +11,10 @@ import static org.junit.Assert.*;
 
 public class ServidorRespaldoTest {
 
-	private static final String tokenSpecial = "tokenspecial";
 	
-	private Servidor servidorValidconContenidos() throws InvalidTokenException{
+	private static final String tokenSpecial = "tokenspecial";
+
+	private Servidor servidorValidconContenidos() throws InvalidTokenException {
 		Servidor servidor = new ServidorImplRespaldo("s2");
 		servidor.agregar(new Cancion("cancion 1", 5), tokenSpecial);
 		servidor.agregar(new Cancion("cancion 2", 3), tokenSpecial);
@@ -40,132 +41,151 @@ public class ServidorRespaldoTest {
 		servidor.agregar(new Emisora("emisora 6"), tokenSpecial);
 		return servidor;
 	}
-	
-	private Servidor servidorValidvacioConRespaldo(Servidor s) throws InvalidTokenException{
-		Servidor servidor = new ServidorImplRespaldo("s1",s);
+
+	private Servidor servidorValidvacioConRespaldo(Servidor s)
+			throws InvalidTokenException {
+		Servidor servidor = new ServidorImplRespaldo("s1", s);
 		return servidor;
 	}
-	
-	private Servidor servidorValidvacioConRespaldoConCancion(Servidor s) throws InvalidTokenException{
-		Servidor servidor = new ServidorImplRespaldo("s1",s);
+
+	private Servidor servidorValidvacioConRespaldoConCancion(Servidor s)
+			throws InvalidTokenException {
+		Servidor servidor = new ServidorImplRespaldo("s1", s);
 		servidor.agregar(new Cancion("cancion 1", 5), tokenSpecial);
 		return servidor;
 	}
+
 	@Test
-	public void busquedaServidorRespaldoCancionNoExisteTest() throws InvalidTokenException{
+	public void busquedaServidorRespaldoCancionNoExisteTest()
+			throws InvalidTokenException {
 		ServidorImplRespaldo respaldo = (ServidorImplRespaldo) servidorValidconContenidos();
 		ServidorImplRespaldo servidor = (ServidorImplRespaldo) servidorValidvacioConRespaldo(respaldo);
 		String t = servidor.alta();
-		
-		assertEquals(servidor.buscar("John Cleese", t).size(),0);
+
+		assertEquals(servidor.buscar("John Cleese", t).size(), 0);
 	}
-	
+
 	@Test
-	public void busquedaServidorRespaldoTest() throws InvalidTokenException{
+	public void busquedaServidorRespaldoTest() throws InvalidTokenException {
 		ServidorImplRespaldo respaldo = (ServidorImplRespaldo) servidorValidconContenidos();
 		ServidorImplRespaldo servidor = (ServidorImplRespaldo) servidorValidvacioConRespaldo(respaldo);
 		String t = servidor.alta();
-		assertEquals(servidor.buscar("cancion 2", t).size(),1);
+		assertEquals(servidor.buscar("cancion 2", t).size(), 1);
 	}
-	
+
 	@Test
-	public void busquedaServidorRespaldoConTokenEliminadoTest() throws InvalidTokenException{
+	public void busquedaServidorRespaldoConTokenEliminadoTest()
+			throws InvalidTokenException {
 		ServidorImplRespaldo respaldo = (ServidorImplRespaldo) servidorValidconContenidos();
 		ServidorImplRespaldo servidor = (ServidorImplRespaldo) servidorValidvacioConRespaldo(respaldo);
 		String t = servidor.alta();
-		assertEquals(servidor.buscar("cancion", t).size(),10);
-		assertEquals(servidor.buscar("cancion", t).size(),0);
+		assertEquals(servidor.buscar("cancion", t).size(), 10);
+		assertEquals(servidor.buscar("cancion", t).size(), 0);
 	}
-	
+
 	@Test
-	public void busquedaServidorRespaldoConTokenEliminadoconNoveAparicionsTest() throws InvalidTokenException{
+	public void busquedaServidorRespaldoConTokenEliminadoconNoveAparicionsTest()
+			throws InvalidTokenException {
 		ServidorImplRespaldo respaldo = (ServidorImplRespaldo) servidorValidconContenidos();
 		ServidorImplRespaldo servidor = (ServidorImplRespaldo) servidorValidvacioConRespaldo(respaldo);
 		String t = servidor.alta();
-		assertEquals(servidor.buscar("cancion 1", t).size(),9);
-		assertEquals(servidor.buscar("cancion 1", t).size(),1);
-		assertEquals(servidor.buscar("cancion 2", t).size(),0);
-		
+		assertEquals(servidor.buscar("cancion 1", t).size(), 9);
+		assertEquals(servidor.buscar("cancion 1", t).size(), 1);
+		assertEquals(servidor.buscar("cancion 2", t).size(), 0);
+
 	}
-	
+
 	@Test
-	public void busquedaServidorRespaldoconAnunciosTest() throws InvalidTokenException{
+	public void busquedaServidorRespaldoconAnunciosTest()
+			throws InvalidTokenException {
 		ServidorImplRespaldo respaldo = (ServidorImplRespaldo) servidorValidconContenidos();
 		ServidorImplRespaldo servidor = (ServidorImplRespaldo) servidorValidvacioConRespaldo(respaldo);
-		assertEquals(servidor.buscar("cancion 2", "").get(0).obtenerTitulo(),"PUBLICIDAD");
-		assertEquals(servidor.buscar("cancion 2", "").get(1).obtenerTitulo(),"cancion 2");
-		assertEquals(servidor.buscar("cancion 2", "").size(),2);
+		assertEquals(servidor.buscar("cancion 2", "").get(0).obtenerTitulo(),
+				"PUBLICIDAD");
+		assertEquals(servidor.buscar("cancion 2", "").get(1).obtenerTitulo(),
+				"cancion 2");
+		assertEquals(servidor.buscar("cancion 2", "").size(), 2);
 	}
-	
+
 	@Test
-	public void busquedaServidorRespaldoconAnunciosEnServidorPrincipalTest() throws InvalidTokenException{
+	public void busquedaServidorRespaldoconAnunciosEnServidorPrincipalTest()
+			throws InvalidTokenException {
 		ServidorImplRespaldo respaldo = (ServidorImplRespaldo) servidorValidconContenidos();
 		ServidorImplRespaldo servidor = (ServidorImplRespaldo) servidorValidvacioConRespaldoConCancion(respaldo);
-		assertEquals(servidor.buscar("cancion 1", "").get(0).obtenerTitulo(),"PUBLICIDAD");
-		assertEquals(servidor.buscar("cancion 1", "").get(1).obtenerTitulo(),"cancion 1");
-		assertEquals(servidor.buscar("cancion 1", "").size(),2);
+		assertEquals(servidor.buscar("cancion 1", "").get(0).obtenerTitulo(),
+				"PUBLICIDAD");
+		assertEquals(servidor.buscar("cancion 1", "").get(1).obtenerTitulo(),
+				"cancion 1");
+		assertEquals(servidor.buscar("cancion 1", "").size(), 2);
 	}
-	
+
 	@Test(expected = InvalidTokenException.class)
-	public void insertarconTokenInvalidoTest() throws InvalidTokenException{
+	public void insertarconTokenInvalidoTest() throws InvalidTokenException {
 		Servidor servidor = new ServidorImplRespaldo("s2");
 		servidor.agregar(new Cancion("cancion 1", 5), "Graham Chapman");
 	}
-	
+
 	@Test
-	public void buscaCancionSoloNoServidorPrincipalTest() throws InvalidTokenException{
+	public void buscaCancionSoloNoServidorPrincipalTest()
+			throws InvalidTokenException {
 		ServidorImplRespaldo respaldo = (ServidorImplRespaldo) servidorValidconContenidos();
 		ServidorImplRespaldo servidor = (ServidorImplRespaldo) servidorValidvacioConRespaldoConCancion(respaldo);
 		String t = servidor.alta();
-		assertEquals(servidor.buscar("cancion", t).get(0).obtenerTitulo(),"cancion 1");
-		assertEquals(servidor.buscar("cancion", t).size(),1);
+		assertEquals(servidor.buscar("cancion", t).get(0).obtenerTitulo(),
+				"cancion 1");
+		assertEquals(servidor.buscar("cancion", t).size(), 1);
 	}
-	
+
 	@Test
-	public void buscaCancionSoloNoServidorPrincipalConStringEmptyTest() throws InvalidTokenException{
+	public void buscaCancionSoloNoServidorPrincipalConStringEmptyTest()
+			throws InvalidTokenException {
 		ServidorImplRespaldo respaldo = (ServidorImplRespaldo) servidorValidconContenidos();
 		ServidorImplRespaldo servidor = (ServidorImplRespaldo) servidorValidvacioConRespaldoConCancion(respaldo);
 		String t = servidor.alta();
-		assertEquals(servidor.buscar("", t).get(0).obtenerTitulo(),"cancion 1");
-		assertEquals(servidor.buscar("", t).size(),1);
+		assertEquals(servidor.buscar("", t).get(0).obtenerTitulo(), "cancion 1");
+		assertEquals(servidor.buscar("", t).size(), 1);
 	}
-	
+
 	@Test
-	public void busquedaServidorRespaldoConBaixaDeTokenTest() throws InvalidTokenException{
+	public void busquedaServidorRespaldoConBaixaDeTokenTest()
+			throws InvalidTokenException {
 		ServidorImplRespaldo respaldo = (ServidorImplRespaldo) servidorValidconContenidos();
 		ServidorImplRespaldo servidor = (ServidorImplRespaldo) servidorValidvacioConRespaldo(respaldo);
 		String t = servidor.alta();
-		assertEquals(servidor.buscar("cancion 2", t).size(),1);
+		assertEquals(servidor.buscar("cancion 2", t).size(), 1);
 		servidor.baja(t);
-		assertEquals(servidor.buscar("cancion 2", t).size(),0);
+		assertEquals(servidor.buscar("cancion 2", t).size(), 0);
 	}
-	
+
 	@Test(expected = InvalidTokenException.class)
-	public void busquedaServidorRespaldoConBaixaDeTokenExceptionTest() throws InvalidTokenException{
+	public void busquedaServidorRespaldoConBaixaDeTokenExceptionTest()
+			throws InvalidTokenException {
 		ServidorImplRespaldo respaldo = (ServidorImplRespaldo) servidorValidconContenidos();
 		ServidorImplRespaldo servidor = (ServidorImplRespaldo) servidorValidvacioConRespaldo(respaldo);
 		String t = servidor.alta();
 		servidor.baja(t);
 		servidor.baja(t);
 	}
-	
+
 	@Test
-	public void eliminarCancionServidorPrincipalTest() throws InvalidTokenException{
+	public void eliminarCancionServidorPrincipalTest()
+			throws InvalidTokenException {
 		ServidorImplRespaldo respaldo = (ServidorImplRespaldo) servidorValidconContenidos();
 		ServidorImplRespaldo servidor = (ServidorImplRespaldo) servidorValidvacioConRespaldoConCancion(respaldo);
 		String t = servidor.alta();
-		assertEquals(servidor.buscar("cancion 1", t).size(),1);
+		assertEquals(servidor.buscar("cancion 1", t).size(), 1);
 		servidor.eliminar(servidor.buscar("cancion 1", t).get(0), tokenSpecial);
-		//ahora vai a valer 8 porque se gastou un token no buscar de eliminar de antes
-		assertEquals(servidor.buscar("cancion 1", t).size(),8);
+		// ahora vai a valer 8 porque se gastou un token no buscar de eliminar
+		// de antes
+		assertEquals(servidor.buscar("cancion 1", t).size(), 8);
 	}
-	
+
 	@Test(expected = InvalidTokenException.class)
-	public void eliminarTokenInvalidoTest() throws InvalidTokenException{
+	public void eliminarTokenInvalidoTest() throws InvalidTokenException {
 		ServidorImplRespaldo respaldo = (ServidorImplRespaldo) servidorValidconContenidos();
 		ServidorImplRespaldo servidor = (ServidorImplRespaldo) servidorValidvacioConRespaldoConCancion(respaldo);
-		servidor.eliminar(new Cancion("py",5), "Terry Gilliam");
+		servidor.eliminar(new Cancion("py", 5), "Terry Gilliam");
 
 	}
-
+	
 }

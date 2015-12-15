@@ -16,7 +16,7 @@ public class ContenidoInexistenteException extends Exception{
 	/**
 	 * Constructor de la excepcion.
 	 */
-	ContenidoInexistenteException(){
+	public ContenidoInexistenteException(){
 		System.out.println("Contenido inexistente");
 	}
 
