@@ -122,7 +122,44 @@ public class ServidorTest {
 		assertEquals(contenidos.size(), 0);
 
 	};
+	
+	@Test
+	public void eliminarTodoContenidoTest() throws InvalidTokenException {
+		
+		Servidor servidor = new ServidorImplSimple("Servidor");
+		
+		Anuncio a = new Anuncio();
+		servidor.agregar(a, tokenSpecial);
+		
+		String token = servidor.alta();
+		
+		assert(servidor.buscar("Publi", token).size() == 1);
+		
+		servidor.eliminar(a, tokenSpecial);
+		
+	}
 
+	@Test
+	public void bajaTokenTest() throws InvalidTokenException {
+		
+		Servidor servidor = new ServidorImplSimple("Servidor");
+		
+		Anuncio a = new Anuncio();
+		Anuncio a2 = new Anuncio();
+		servidor.agregar(a, tokenSpecial);
+		
+		String token = servidor.alta();
+		
+		assert(servidor.buscar("Publi", token).size() == 1);
+		
+		servidor.eliminar(a2, tokenSpecial);
+
+		assert(servidor.buscar("Publi", token).size() == 1);
+
+	}
+	
+	
+	
 	@Test
 	public void buscarTokenVacioTest() throws InvalidTokenException {
 

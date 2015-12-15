@@ -69,7 +69,7 @@ public class ServidorImplSimple implements Servidor {
 		while (exist) {
 			newToken = generarToken();
 			if (!tokensAdmitidos.isEmpty()) {
-				exist = findToken(tokensAdmitidos, newToken);
+				exist = findToken(tokensAdmitidos, newToken)!=-1;
 			} else {
 				exist = false;
 			}
@@ -96,20 +96,10 @@ public class ServidorImplSimple implements Servidor {
 		// como válido nunca máis.
 		// IMPLICITAMENTE cando buscas e superas os 10 contidos.
 
-		boolean exist = findToken(tokensAdmitidos, token);
-
-		if (!exist) {
-			throw new InvalidTokenException();
-		} else {
-			for (int i = 0; i < tokensAdmitidos.size(); i++) {
-				if (tokensAdmitidos.get(i).getToken().equals(token)) {
-					tokensAdmitidos.remove(i);
-					break;
-				}
-
-			}
-		}
-
+		int i = findToken(tokensAdmitidos, token);
+		if (i==-1) throw new InvalidTokenException();
+		else
+			tokensAdmitidos.remove(i);
 	}
 
 	/**
@@ -205,9 +195,9 @@ public class ServidorImplSimple implements Servidor {
 
 			}
 		}
-		if (findToken(tokensAdmitidos, token)) {
+		if (findToken(tokensAdmitidos, token) != -1) {
 			c = buscarNome(subcadena);
-			Token t = buscaToken(token);
+			Token t = getToken(token);
 			if (!c.isEmpty()) {
 				c = restarToken(t, c);
 			}
@@ -327,7 +317,7 @@ public class ServidorImplSimple implements Servidor {
 		String salida = null;
 		while (true) {
 			salida = UUID.randomUUID().toString().substring(0, 10);
-			if (!findToken(tokensAdmitidos, salida))
+			if (findToken(tokensAdmitidos, salida) == -1)
 				return salida;
 		}
 
@@ -343,33 +333,16 @@ public class ServidorImplSimple implements Servidor {
 	 *            La lista de los tokens que han sido admitidos por el servidor.
 	 * @param token
 	 *            El token que queremos comprobar si existe.
-	 * @return True en caso de que el token exista como uno disponible, y False
+	 * @return la posicion del token en caso de que el token exista como uno disponible, y -1
 	 *         en caso de que no.
 	 */
-	private boolean findToken(List<Token> tokensAdmitidos, String token) {
+	private int findToken(List<Token> tokensAdmitidos, String token) {
 		for (int i = 0; i < (tokensAdmitidos.size()); i++)
 			if (tokensAdmitidos.get(i).getToken().equalsIgnoreCase(token))
-				return true;
-		return false;
+				return i;
+		return -1;
 	}
 
-	/**
-	 * FUNCION AUXILIAR
-	 * 
-	 * Este metodo se encarga de buscar si un token existe o no en la lista de
-	 * los admitidos por el servidor.
-	 * 
-	 * @param token
-	 *            El token que se quiere buscar si esta en la lista de los
-	 *            admitidos por el servidor.
-	 * @return El Token.
-	 */
-	private Token buscaToken(String token) {
-		for (int i = 0; i < (tokensAdmitidos.size()); i++)
-			if (tokensAdmitidos.get(i).getToken().equalsIgnoreCase(token))
-				return tokensAdmitidos.get(i);
-		return null;
-	}
 
 	/**
 	 * FUNCION AUXILIAR
@@ -382,8 +355,10 @@ public class ServidorImplSimple implements Servidor {
 	 * @return El Token.
 	 */
 	public Token getToken(String token) {
-		return buscaToken(token);
-	}
+		for (int i = 0; i < (tokensAdmitidos.size()); i++)
+			if (tokensAdmitidos.get(i).getToken().equalsIgnoreCase(token))
+				return tokensAdmitidos.get(i);
+		return null;	}
 
 	/**
 	 * FUNCION AUXILIAR
@@ -394,7 +369,7 @@ public class ServidorImplSimple implements Servidor {
 	 *            El token que se quiere admitir.
 	 */
 	public void setToken(Token token) {
-		if (buscaToken(token.getToken()) == null)
+		if (getToken(token.getToken()) == null)
 			tokensAdmitidos.add(token);
 	}
 
