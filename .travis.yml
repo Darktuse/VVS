@@ -3,5 +3,7 @@ before_install:
 - mvn install:install-file -Dfile=lib/jcheck.jar -DgroupId=jcheck -DartifactId=jcheck -Dversion=1 -Dpackaging=jar -DgeneratedPom=true
 - mvn install -DskipTests=true
 install: mvn test
+notifications:
+  email: false
 after_success:
   - mvn clean cobertura:cobertura coveralls:report
