@@ -368,17 +368,5 @@ public class ServidorImplSimple implements Servidor {
 				return tokensAdmitidos.get(i);
 		return null;	}
 
-	/**
-	 * FUNCION AUXILIAR
-	 * 
-	 * Este metodo se encarga de añadir un token a la lista de admitidos.
-	 * 
-	 * @param token
-	 *            El token que se quiere admitir.
-	 */
-	public void setToken(Token token) {
-		if (getToken(token.getToken()) == null)
-			tokensAdmitidos.add(token);
-	}
 
 }
