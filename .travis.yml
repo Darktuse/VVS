@@ -1,7 +1,7 @@
 language: java
 before_install: 
 mvn install -DskipTests=true
-mvn install:install-file -Dfile=lib/jcheck-0.1.jar -DgroupId=jcheck -DartifactId=jcheck -Dversion=1 -Dpackaging=jar -DgeneratedPom=true
+mvn install:install-file -Dfile=lib/jcheck.jar -DgroupId=jcheck -DartifactId=jcheck -Dversion=1 -Dpackaging=jar -DgeneratedPom=true
 install: mvn test
 after_success:
   - mvn clean cobertura:cobertura coveralls:report
