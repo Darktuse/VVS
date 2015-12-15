@@ -145,7 +145,6 @@
 
 		</plugins>
 	</build>
-
 	<reporting>
 		<plugins>
 			<plugin>
@@ -159,11 +158,16 @@
 				<artifactId>pitest-maven</artifactId>
 				<version>1.1.7</version>
 			</plugin>
-
-
+			<plugin>
+				<groupId>com.google.code.jetm</groupId>
+				<artifactId>jetm-maven-plugin</artifactId>
+				<version>1.0.1</version>
+				<configuration>
+					<timings>
+						<timing>${project.build.directory}/jetm</timing>
+					</timings>
+				</configuration>
+			</plugin>
 		</plugins>
-
 	</reporting>
-
-
 </project>

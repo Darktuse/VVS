@@ -40,4 +40,6 @@ Generará un xml con los bugs y warnings que encuentre en el directorio target c
 Cobertura
 ---------
 
-Aunque no se use directamente, tanto travis como PIT nos da la información sobre la cobertura de las pruebas.
+Al final hemos optado por añadir el plugin de cobertura para comprobar la cobertura de ramas, no solo la de lineas. Los informes se encuentran en taget/site/cobertura
+
+Ejecutar con: mvn cobertura:cobertura
