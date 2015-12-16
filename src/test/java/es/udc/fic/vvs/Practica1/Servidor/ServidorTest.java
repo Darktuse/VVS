@@ -1,8 +1,17 @@
 package es.udc.fic.vvs.Practica1.Servidor;
 
+import java.util.Enumeration;
 import java.util.List;
 
 import org.junit.Test;
+import org.junit.contrib.theories.Theory;
+import org.junit.runner.RunWith;
+import org.mockito.internal.util.collections.Iterables;
+
+import com.pholser.junit.quickcheck.ForAll;
+import com.pholser.junit.quickcheck.generator.*;
+import com.pholser.junit.quickcheck.generator.InRange;
+import com.pholser.junit.quickcheck.runner.JUnitQuickcheck;
 
 import es.udc.fic.vvs.Practica1.Contenido.Anuncio;
 import es.udc.fic.vvs.Practica1.Contenido.Cancion;
@@ -12,13 +21,21 @@ import es.udc.fic.vvs.Practica1.Contenido.Emisora;
 import es.udc.fic.vvs.Practica1.Servidor.InvalidTokenException;
 import es.udc.fic.vvs.Practica1.Servidor.Servidor;
 import es.udc.fic.vvs.Practica1.Servidor.ServidorImplSimple;
+import etm.core.configuration.EtmManager;
+import etm.core.monitor.EtmMonitor;
+import etm.core.monitor.EtmPoint;
+import net.java.quickcheck.generator.PrimitiveGenerators;
+import net.java.quickcheck.generator.PrimitiveGeneratorsIterables;
+import static net.java.quickcheck.generator.PrimitiveGeneratorsIterables.someIntegers;
+
 import static org.junit.Assert.*;
 
 /**
  * Unit test for simple ServidorSimple.
  */
-public class ServidorTest {
 
+public class ServidorTest {
+	private static final EtmMonitor etmMonitor = EtmManager.getEtmMonitor();
 	private static final String tokenSpecial = "tokenspecial";
 
 	@Test
@@ -84,7 +101,7 @@ public class ServidorTest {
 		Servidor servidor = crearServidor();
 		
 		String token = servidor.alta();
-		for (int i=0; i<10;i++)
+		for (Integer any : someIntegers())
 			servidor.alta();
 		
 		servidor.baja(token);
@@ -162,7 +179,7 @@ public class ServidorTest {
 	
 	@Test
 	public void buscarTokenVacioTest() throws InvalidTokenException {
-
+		EtmPoint point = etmMonitor.createPoint("BusinessService:buscarTokenVacioTest");
 		Servidor servidor = crearServidor();
 
 		String token = "";
