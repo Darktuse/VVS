@@ -2,6 +2,7 @@ package es.udc.fic.vvs.Practica1.Servidor;
 
 import org.junit.Test;
 
+import es.udc.fic.vvs.Practica1.Contenido.Anuncio;
 import es.udc.fic.vvs.Practica1.Contenido.Cancion;
 import es.udc.fic.vvs.Practica1.Contenido.Emisora;
 import es.udc.fic.vvs.Practica1.Servidor.InvalidTokenException;
@@ -55,6 +56,18 @@ public class ServidorRespaldoTest {
 		return servidor;
 	}
 
+	
+	@Test
+	public void obtenerNombreServidorRespaldo()
+			throws InvalidTokenException {
+		ServidorImplRespaldo respaldo = (ServidorImplRespaldo) servidorValidconContenidos();
+		ServidorImplRespaldo servidor = (ServidorImplRespaldo) servidorValidvacioConRespaldo(respaldo);
+		
+		assertEquals("s1", servidor.obtenerNombre());
+		assertEquals("s2", respaldo.obtenerNombre());
+	}
+	
+	
 	@Test
 	public void busquedaServidorRespaldoCancionNoExisteTest()
 			throws InvalidTokenException {
@@ -187,5 +200,75 @@ public class ServidorRespaldoTest {
 		servidor.eliminar(new Cancion("py", 5), "Terry Gilliam");
 
 	}
+	
+	
+	@Test
+	public void buscarContenidoServidorSinRespaldoTest()
+			throws InvalidTokenException {
+		ServidorImplRespaldo servidor = (ServidorImplRespaldo) servidorValidconContenidos();
+		assertEquals(2, servidor.buscar("cancion 2", "").size());
+		
+	}
+	
+	 @Test
+	public void eliminarCancionServidorPrincipalDosAltasTest()
+			throws InvalidTokenException {
+		ServidorImplRespaldo respaldo = (ServidorImplRespaldo) servidorValidconContenidos();
+		ServidorImplRespaldo servidor = (ServidorImplRespaldo) servidorValidvacioConRespaldoConCancion(respaldo);
+		String t = servidor.alta();
+		assertEquals(servidor.buscar("cancion 2", t).size(), 1);
+		servidor.eliminar(servidor.buscar("cancion 1", t).get(0), tokenSpecial);
+		
+		
+		assertEquals(servidor.buscar("cancion 2", t).size(), 1);
+		
+		String t2 = servidor.alta();
+		assertEquals(servidor.buscar("cancion 2", t2).size(), 1);
+	}
+	 
+	
+
+	// LOS TRES TESTS SIGUIENTES NO HACEN DESAPARECER LAS COSAS ROJAS!!
+	@Test
+	public void agregarConTokenEspecialTest()
+			throws InvalidTokenException {
+		ServidorImplRespaldo servidor = new ServidorImplRespaldo("s2");
+		
+		servidor.agregar(new Anuncio(), tokenSpecial);
+		assertEquals(servidor.buscar("PUBLI", "").size(), 2);
+	}
+	
+	
+	
+	@Test(expected = InvalidTokenException.class)
+	public void agregarSinTokenEspecialTest()
+			throws InvalidTokenException {
+		ServidorImplRespaldo servidor = new ServidorImplRespaldo("s2");
+		
+		servidor.agregar(new Anuncio(), "EHFEBO");
+	}
+	
+	
+	@Test
+	public void eliminarTodoContenidoTest() throws InvalidTokenException {
+		
+		ServidorImplRespaldo respaldo = (ServidorImplRespaldo) servidorValidconContenidos();
+		ServidorImplRespaldo servidor = new ServidorImplRespaldo("Servidor", respaldo);
+
+		Anuncio a = new Anuncio();
+		Anuncio a2 = new Anuncio();
+		servidor.agregar(a, tokenSpecial);
+		servidor.agregar(a2, tokenSpecial);
+		
+		String token = servidor.alta();
+		
+		assertEquals(servidor.buscar("Publi", token).size(), 2);
+		
+		servidor.eliminar(a, tokenSpecial);
+		servidor.eliminar(a2, tokenSpecial);
+		
+	}
+	
+	
 	
 }
