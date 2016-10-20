@@ -30,6 +30,7 @@ public class ServidorImplSimple implements Servidor {
 	private List<Contenido> contenidos = new ArrayList<Contenido>();
 	private List<Token> tokensAdmitidos = new ArrayList<Token>();
 	private static final String tokenSpecial = "tokenspecial";
+	private int tokenVacioBusquedaContador = 0;
 
 	// Constructores
 
@@ -73,7 +74,7 @@ public class ServidorImplSimple implements Servidor {
 		while (exist) {
 			newToken = generarToken();
 			if (!tokensAdmitidos.isEmpty()) {
-				exist = findToken(tokensAdmitidos, newToken)!=-1;
+				exist = findToken(tokensAdmitidos, newToken) != -1;
 			} else {
 				exist = false;
 			}
@@ -102,7 +103,8 @@ public class ServidorImplSimple implements Servidor {
 		// IMPLICITAMENTE cando buscas e superas os 10 contidos.
 
 		int i = findToken(tokensAdmitidos, token);
-		if (i==-1) throw new InvalidTokenException();
+		if (i == -1)
+			throw new InvalidTokenException();
 		else
 			tokensAdmitidos.remove(i);
 	}
@@ -121,8 +123,7 @@ public class ServidorImplSimple implements Servidor {
 	 *             Excepcion que salta en el momento en el que no se corresponda
 	 *             el token con el especial de administrador.
 	 */
-	public void agregar(Contenido contenido, String token)
-			throws InvalidTokenException {
+	public void agregar(Contenido contenido, String token) throws InvalidTokenException {
 		EtmPoint point = etmMonitor.createPoint("BusinessService:agregarServidorSimple");
 
 		if (tokenSpecial.equals(token)) {
@@ -147,8 +148,7 @@ public class ServidorImplSimple implements Servidor {
 	 *             Excepcion que salta en el momento en el que no se corresponda
 	 *             el token con el especial de administrador.
 	 */
-	public void eliminar(Contenido contenido, String token)
-			throws InvalidTokenException {
+	public void eliminar(Contenido contenido, String token) throws InvalidTokenException {
 		EtmPoint point = etmMonitor.createPoint("BusinessService:eliminarServidorSimple");
 		if (tokenSpecial.equals(token)) {
 
@@ -189,15 +189,22 @@ public class ServidorImplSimple implements Servidor {
 	 *             un token invalido (que ya ha sido dado de baja o que
 	 *             directamente no existe).
 	 */
-	public List<Contenido> buscar(String subcadena, String token)
-			throws InvalidTokenException {
+	public List<Contenido> buscar(String subcadena, String token) throws InvalidTokenException {
 		EtmPoint point = etmMonitor.createPoint("BusinessService:buscarServidorSimple");
 		List<Contenido> c = new ArrayList<Contenido>();
 		if (token.isEmpty()) {
 			c = buscarNome(subcadena);
 			if (!c.isEmpty()) {
+
+			
 				// en caso de que non estea vacio
-				c = insertaAnuncios(c);
+				if (this.tokenVacioBusquedaContador == 2) {
+					c = insertaAnuncios(c);
+				}
+				this.tokenVacioBusquedaContador += 1;
+				this.tokenVacioBusquedaContador = this.tokenVacioBusquedaContador%3;
+
+
 				return c;
 
 			}
@@ -267,8 +274,7 @@ public class ServidorImplSimple implements Servidor {
 	 *             Excepcion que salta en el momento en el que se intenta dar de
 	 *             baja a un token ya invalido.
 	 */
-	private List<Contenido> restarToken(Token t, List<Contenido> c)
-			throws InvalidTokenException {
+	private List<Contenido> restarToken(Token t, List<Contenido> c) throws InvalidTokenException {
 		/*
 		 * Funcion na cal se resta o numero ao token
 		 * 
@@ -341,8 +347,8 @@ public class ServidorImplSimple implements Servidor {
 	 *            La lista de los tokens que han sido admitidos por el servidor.
 	 * @param token
 	 *            El token que queremos comprobar si existe.
-	 * @return la posicion del token en caso de que el token exista como uno disponible, y -1
-	 *         en caso de que no.
+	 * @return la posicion del token en caso de que el token exista como uno
+	 *         disponible, y -1 en caso de que no.
 	 */
 	private int findToken(List<Token> tokensAdmitidos, String token) {
 		for (int i = 0; i < (tokensAdmitidos.size()); i++)
@@ -350,7 +356,6 @@ public class ServidorImplSimple implements Servidor {
 				return i;
 		return -1;
 	}
-
 
 	/**
 	 * FUNCION AUXILIAR
@@ -366,7 +371,7 @@ public class ServidorImplSimple implements Servidor {
 		for (int i = 0; i < (tokensAdmitidos.size()); i++)
 			if (tokensAdmitidos.get(i).getToken().equalsIgnoreCase(token))
 				return tokensAdmitidos.get(i);
-		return null;	}
-
+		return null;
+	}
 
 }
