@@ -28,6 +28,7 @@ public class ServidorImplRespaldo implements Servidor {
 	private List<Token> tokensAdmitidos = new ArrayList<Token>();
 	private static final String tokenSpecial = "tokenspecial";
 	private ServidorImplRespaldo servidorRespaldo = null;
+	private int tokenVacioBusquedaContador = 0;
 
 	// Constructores
 
@@ -214,12 +215,24 @@ public class ServidorImplRespaldo implements Servidor {
 					// se non atopou nada, chamase ao outro servidor para mirar
 					// o seu contido
 					c = servidorRespaldo.buscar(subcadena, token);
+				if(!c.isEmpty()){
+					
+					if(this.tokenVacioBusquedaContador==2)
+						c=insertaAnuncios(c);
+						
+					this.tokenVacioBusquedaContador += 1;
+					this.tokenVacioBusquedaContador = this.tokenVacioBusquedaContador%3;
+				}
 			} else {
-				// en caso de que non estea vacio
-				c = insertaAnuncios(c);
-				return c;
-
+				
+				if(this.tokenVacioBusquedaContador==2)
+					c=insertaAnuncios(c);
+					
+				this.tokenVacioBusquedaContador += 1;
+				this.tokenVacioBusquedaContador = this.tokenVacioBusquedaContador%3;
+			
 			}
+				
 		}
 		if (findToken(tokensAdmitidos, token) != -1) {
 			c = buscarNome(subcadena);
@@ -234,6 +247,9 @@ public class ServidorImplRespaldo implements Servidor {
 				c = restarToken(t, c);
 			}
 
+		}else{
+			if (!token.isEmpty())
+			throw new InvalidTokenException();
 		}
 		return c;
 	}

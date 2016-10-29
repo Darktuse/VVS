@@ -216,6 +216,10 @@ public class ServidorImplSimple implements Servidor {
 				c = restarToken(t, c);
 			}
 
+	
+		}else{
+			if(!token.isEmpty())
+			throw new InvalidTokenException();
 		}
 		return c;
 	}
