@@ -138,7 +138,7 @@ public class ServidorTest {
 
 		servidor.baja(token);
 
-		contenidos = servidor.buscar("4", token);
+		servidor.buscar("4", token);
 
 	}
 	@Test
@@ -160,7 +160,6 @@ public class ServidorTest {
 		assertEquals(contenidos.get(0).obtenerTitulo(),"PUBLICIDAD");
 		assertEquals(contenidos.size(),2);
 		
-		contenidos.toString();
 		
 	}
 
@@ -289,7 +288,7 @@ public class ServidorTest {
 				c = servidor.buscar("cancion5", token);
 			}
 			
-			c = servidor.buscar("cancion5", token);
+			servidor.buscar("cancion5", token);
 			
 			
 		}
