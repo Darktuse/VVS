@@ -50,6 +50,7 @@ public class Anuncio implements Contenido {
 	public int obtenerDuracion() {
 		// Los anuncios siempre duran 5 segundos.
 		return duracion;
+
 	}
 
 	/**
@@ -79,14 +80,14 @@ public class Anuncio implements Contenido {
 	public List<Contenido> buscar(String subcadena) {
 
 		List<Contenido> contenidos = new ArrayList<Contenido>();
-		
-		if ((titulo.toLowerCase()).contains(subcadena.toLowerCase())){
+
+		if ((titulo.toLowerCase()).contains(subcadena.toLowerCase()) && (!titulo.isEmpty())) {
 			contenidos.add(this);
 			return contenidos;
+		} else {
+			return contenidos;
 		}
-		System.out.println("No existe ningún contenido correspondiente a esa búsqueda.");
-		return contenidos;
-		
+
 	}
 
 	// NO TIENEN EFECTO EN ESTA CLASE.
